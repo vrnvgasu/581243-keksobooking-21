@@ -19,17 +19,18 @@ const MAX_ROOMS = 10;
 const MIN_PRICE = 100;
 const MAX_PRICE = 1000;
 const ADVERTS_COUNT = 8;
-const mapWidth = document.querySelector(`.` + MAP_CLASS).offsetWidth;
+const mapWidth = document.querySelector(`.${MAP_CLASS}`).offsetWidth;
 
 let getRandomFromArray = (arr = []) => arr[Math.floor(Math.random() * arr.length)];
 
 let getRandomInteger = (min = 0, max = 1) => Math.floor(min + Math.random() * (max + 1 - min));
 
 let getRandomArrayPart = (arr) => {
-  let randomItems = arr.concat();
+  let randomItems = arr.slice();
 
   let newArrayLength = arr.length - getRandomInteger(0, arr.length - 1);
-  for (let i = 0; i < (arr.length - newArrayLength); i++) {
+  let lengthForRemove = arr.length - newArrayLength;
+  for (let i = 0; i < lengthForRemove; i++) {
     randomItems.splice(getRandomInteger(0, randomItems.length - 1), 1);
   }
 
@@ -46,14 +47,12 @@ let getBuildTypeTranslation = (type) => {
   }
 };
 
-let hiddenElement = (element, hidden) => {
-  if (hidden) {
-    element.classList.add(HIDDEN_CLASS);
-  }
+let hideElement = (element) => {
+  element.classList.add(HIDDEN_CLASS);
 };
 
-let createCartElement = (advert) => {
-  let template = document.querySelector(`#card`).content.querySelector(`.map__card`).cloneNode(true);
+let createCartElement = (advert, cardArticle) => {
+  let template = cardArticle.cloneNode(true);
   let featureItem = template.querySelector(`.popup__feature`);
   let featureList = template.querySelector(`.popup__features`);
   let photoItem = template.querySelector(`.popup__photo`);
@@ -68,27 +67,46 @@ let createCartElement = (advert) => {
   let avatar = template.querySelector(`.popup__avatar`);
 
   title.textContent = advert.offer.title;
-  hiddenElement(title, !advert.offer.title);
+  if (!advert.offer.title) {
+    hideElement(title);
+  }
+
   address.textContent = advert.offer.address;
-  hiddenElement(address, !advert.offer.address);
+  if (!advert.offer.address) {
+    hideElement(address);
+  }
+
   price.textContent = `${advert.offer.price}₽/ночь`;
-  hiddenElement(price, !advert.offer.price);
+  if (!advert.offer.price) {
+    hideElement(price);
+  }
+
   type.textContent = getBuildTypeTranslation(advert.offer.type);
-  hiddenElement(type, !advert.offer.type);
+  if (!advert.offer.type) {
+    hideElement(type);
+  }
+
   capacity.textContent = `${advert.offer.rooms} комнаты для ${advert.offer.guests} гостей`;
-  hiddenElement(type, !advert.offer.rooms || !advert.offer.guests);
+  if (!advert.offer.rooms || !advert.offer.guests) {
+    hideElement(capacity);
+  }
+
   time.textContent = `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`;
-  hiddenElement(type, !advert.offer.checkin || !advert.offer.checkout);
+  if (!advert.offer.checkin || !advert.offer.checkout) {
+    hideElement(time);
+  }
 
   featureList.textContent = ``;
   advert.offer.features.forEach((feature) => {
     let newFeatureItem = featureItem.cloneNode();
     newFeatureItem.className = `popup__feature`;
-    newFeatureItem.classList.add(`popup__feature--` + feature);
+    newFeatureItem.classList.add(`popup__feature--${feature}`);
 
     featureList.appendChild(newFeatureItem);
   });
-  hiddenElement(featureList, featureList.children.length === 0);
+  if (featureList.children.length === 0) {
+    hideElement(featureList);
+  }
 
   description.textContent = advert.offer.description;
   photoList.textContent = ``;
@@ -98,17 +116,22 @@ let createCartElement = (advert) => {
 
     photoList.appendChild(newPhotoItem);
   });
-  hiddenElement(photoList, photoList.children.length === 0);
+  if (photoList.children.length === 0) {
+    hideElement(photoList);
+  }
 
   avatar.setAttribute(`src`, advert.author.avatar);
-  hiddenElement(avatar, !advert.author.avatar);
+  if (!advert.author.avatar) {
+    hideElement(avatar);
+  }
 
   return template;
 };
 
 let addCartElementToDOM = (advert) => {
-  let cart = createCartElement(advert);
-  let mapFiltersContainer = document.querySelector(`.` + MAP_FILTERS_CONTAINER);
+  let cardArticle = document.querySelector(`#card`).content.querySelector(`.map__card`);
+  let cart = createCartElement(advert, cardArticle);
+  let mapFiltersContainer = document.querySelector(`.${MAP_FILTERS_CONTAINER}`);
   mapFiltersContainer.insertAdjacentElement(`beforebegin`, cart);
 };
 
@@ -175,7 +198,7 @@ let createPins = (adverts) => {
 
 let addAdvertsToMap = (adverts) => {
   let fragment = createPins(adverts);
-  document.querySelector(`.` + MAP_CLASS).appendChild(fragment);
+  document.querySelector(`.${MAP_CLASS}`).appendChild(fragment);
 };
 
 let adverts = generateAdverts();
