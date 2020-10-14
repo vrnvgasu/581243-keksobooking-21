@@ -9,8 +9,6 @@ const PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`,
 ];
-const MAP_CLASS = `map__pins`;
-const MAP_FILTERS_CONTAINER = `map__filters-container`;
 const HIDDEN_CLASS = `visually-hidden`;
 const MIN_Y = 130;
 const MAX_Y = 630;
@@ -19,7 +17,12 @@ const MAX_ROOMS = 10;
 const MIN_PRICE = 100;
 const MAX_PRICE = 1000;
 const ADVERTS_COUNT = 8;
-const mapWidth = document.querySelector(`.${MAP_CLASS}`).offsetWidth;
+
+const mapFiltersContainer = document.querySelector(`.map__filters-container`);
+const mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const map = document.querySelector(`.map__pins`);
+const cardArticle = document.querySelector(`#card`).content.querySelector(`.map__card`);
+const mapWidth = map.offsetWidth;
 
 let getRandomFromArray = (arr = []) => arr[Math.floor(Math.random() * arr.length)];
 
@@ -27,9 +30,9 @@ let getRandomInteger = (min = 0, max = 1) => Math.floor(min + Math.random() * (m
 
 let getRandomArrayPart = (arr) => {
   let randomItems = arr.slice();
-
   let newArrayLength = arr.length - getRandomInteger(0, arr.length - 1);
   let lengthForRemove = arr.length - newArrayLength;
+
   for (let i = 0; i < lengthForRemove; i++) {
     randomItems.splice(getRandomInteger(0, randomItems.length - 1), 1);
   }
@@ -51,7 +54,7 @@ let hideElement = (element) => {
   element.classList.add(HIDDEN_CLASS);
 };
 
-let createCartElement = (advert, cardArticle) => {
+let createCartElement = (advert) => {
   let template = cardArticle.cloneNode(true);
   let featureItem = template.querySelector(`.popup__feature`);
   let featureList = template.querySelector(`.popup__features`);
@@ -67,34 +70,13 @@ let createCartElement = (advert, cardArticle) => {
   let avatar = template.querySelector(`.popup__avatar`);
 
   title.textContent = advert.offer.title;
-  if (!advert.offer.title) {
-    hideElement(title);
-  }
-
   address.textContent = advert.offer.address;
-  if (!advert.offer.address) {
-    hideElement(address);
-  }
-
   price.textContent = `${advert.offer.price}₽/ночь`;
-  if (!advert.offer.price) {
-    hideElement(price);
-  }
-
   type.textContent = getBuildTypeTranslation(advert.offer.type);
-  if (!advert.offer.type) {
-    hideElement(type);
-  }
-
-  capacity.textContent = `${advert.offer.rooms} комнаты для ${advert.offer.guests} гостей`;
-  if (!advert.offer.rooms || !advert.offer.guests) {
-    hideElement(capacity);
-  }
-
+  capacity.textContent = `${advert.offer.rooms} комната(ы) для ${advert.offer.guests} гостей`;
   time.textContent = `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`;
-  if (!advert.offer.checkin || !advert.offer.checkout) {
-    hideElement(time);
-  }
+  description.textContent = advert.offer.description;
+  avatar.setAttribute(`src`, advert.author.avatar);
 
   featureList.textContent = ``;
   advert.offer.features.forEach((feature) => {
@@ -104,11 +86,7 @@ let createCartElement = (advert, cardArticle) => {
 
     featureList.appendChild(newFeatureItem);
   });
-  if (featureList.children.length === 0) {
-    hideElement(featureList);
-  }
 
-  description.textContent = advert.offer.description;
   photoList.textContent = ``;
   advert.offer.photos.forEach((photo) => {
     let newPhotoItem = photoItem.cloneNode();
@@ -116,11 +94,7 @@ let createCartElement = (advert, cardArticle) => {
 
     photoList.appendChild(newPhotoItem);
   });
-  if (photoList.children.length === 0) {
-    hideElement(photoList);
-  }
 
-  avatar.setAttribute(`src`, advert.author.avatar);
   if (!advert.author.avatar) {
     hideElement(avatar);
   }
@@ -129,9 +103,7 @@ let createCartElement = (advert, cardArticle) => {
 };
 
 let addCartElementToDOM = (advert) => {
-  let cardArticle = document.querySelector(`#card`).content.querySelector(`.map__card`);
-  let cart = createCartElement(advert, cardArticle);
-  let mapFiltersContainer = document.querySelector(`.${MAP_FILTERS_CONTAINER}`);
+  let cart = createCartElement(advert);
   mapFiltersContainer.insertAdjacentElement(`beforebegin`, cart);
 };
 
@@ -188,9 +160,9 @@ let createPin = (advert, template) => {
 
 let createPins = (adverts) => {
   let fragment = document.createDocumentFragment();
-  let template = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+
   adverts.forEach((advert) => {
-    fragment.appendChild(createPin(advert, template));
+    fragment.appendChild(createPin(advert, mapPinTemplate));
   });
 
   return fragment;
@@ -198,7 +170,7 @@ let createPins = (adverts) => {
 
 let addAdvertsToMap = (adverts) => {
   let fragment = createPins(adverts);
-  document.querySelector(`.${MAP_CLASS}`).appendChild(fragment);
+  map.appendChild(fragment);
 };
 
 let adverts = generateAdverts();
