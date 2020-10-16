@@ -9,17 +9,13 @@ const PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`,
 ];
-const MAP_CLASS = `map__pins`;
-// const MAP_FILTERS_CONTAINER = `map__filters-container`;
 // const HIDDEN_CLASS = `visually-hidden`;
 const MIN_Y = 130;
 const MAX_Y = 630;
 const MIN_ROOMS = 1;
-const MAX_ROOMS = 10;
-const MIN_PRICE = 100;
-const MAX_PRICE = 1000;
+const MAX_ROOMS = 3;
+const MAX_PRICE = 1000000;
 const ADVERTS_COUNT = 8;
-const mapWidth = document.querySelector(`.` + MAP_CLASS).offsetWidth;
 
 /**
  * Валидация
@@ -40,25 +36,33 @@ const MAP_PIN_WIDTH = 65;
 const MAP_PIN_PASSIVE_HEIGHT = 65;
 const MAP_PIN_ACTIVE_HEIGHT = 77;
 
-let fieldsets = document.querySelectorAll(`fieldset`);
-let mapPin = document.querySelector(`.map__pin--main`);
-let addressInput = document.querySelector(`#address`);
-let priceInput = document.querySelector(`#price`);
-let timeinSelet = document.querySelector(`#timein`);
-let timeoutSelet = document.querySelector(`#timeout`);
-let roomNumberSelet = document.querySelector(`#room_number`);
-let capacitySelet = document.querySelector(`#capacity`);
-let addForm = document.querySelector(`.ad-form`);
+// const mapFiltersContainer = document.querySelector(`.map__filters-container`);
+const mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const map = document.querySelector(`.map__pins`);
+// const cardArticle = document.querySelector(`#card`).content.querySelector(`.map__card`);
+const mapWidth = map.offsetWidth;
+const fieldsets = document.querySelectorAll(`fieldset`);
+const mapPin = document.querySelector(`.map__pin--main`);
+const addressInput = document.querySelector(`#address`);
+const priceInput = document.querySelector(`#price`);
+const timeinSelect = document.querySelector(`#timein`);
+const timeoutSelect = document.querySelector(`#timeout`);
+const roomNumberSelect = document.querySelector(`#room_number`);
+const capacitySelect = document.querySelector(`#capacity`);
+const addForm = document.querySelector(`.ad-form`);
+const typeInput = document.querySelector(`#type`);
+const mainMap = document.querySelector(`.map`);
 
 let getRandomFromArray = (arr = []) => arr[Math.floor(Math.random() * arr.length)];
 
 let getRandomInteger = (min = 0, max = 1) => Math.floor(min + Math.random() * (max + 1 - min));
 
 let getRandomArrayPart = (arr) => {
-  let randomItems = arr.concat();
-
+  let randomItems = arr.slice();
   let newArrayLength = arr.length - getRandomInteger(0, arr.length - 1);
-  for (let i = 0; i < (arr.length - newArrayLength); i++) {
+  let lengthForRemove = arr.length - newArrayLength;
+
+  for (let i = 0; i < lengthForRemove; i++) {
     randomItems.splice(getRandomInteger(0, randomItems.length - 1), 1);
   }
 
@@ -75,14 +79,12 @@ let getRandomArrayPart = (arr) => {
 //   }
 // };
 
-// let hiddenElement = (element, hidden) => {
-//   if (hidden) {
-//     element.classList.add(HIDDEN_CLASS);
-//   }
+// let hideElement = (element) => {
+//   element.classList.add(HIDDEN_CLASS);
 // };
 
 // let createCartElement = (advert) => {
-//   let template = document.querySelector(`#card`).content.querySelector(`.map__card`).cloneNode(true);
+//   let template = cardArticle.cloneNode(true);
 //   let featureItem = template.querySelector(`.popup__feature`);
 //   let featureList = template.querySelector(`.popup__features`);
 //   let photoItem = template.querySelector(`.popup__photo`);
@@ -97,29 +99,23 @@ let getRandomArrayPart = (arr) => {
 //   let avatar = template.querySelector(`.popup__avatar`);
 //
 //   title.textContent = advert.offer.title;
-//   hiddenElement(title, !advert.offer.title);
 //   address.textContent = advert.offer.address;
-//   hiddenElement(address, !advert.offer.address);
 //   price.textContent = `${advert.offer.price}₽/ночь`;
-//   hiddenElement(price, !advert.offer.price);
 //   type.textContent = getBuildTypeTranslation(advert.offer.type);
-//   hiddenElement(type, !advert.offer.type);
-//   capacity.textContent = `${advert.offer.rooms} комнаты для ${advert.offer.guests} гостей`;
-//   hiddenElement(type, !advert.offer.rooms || !advert.offer.guests);
+//   capacity.textContent = `${advert.offer.rooms} комната(ы) для ${advert.offer.guests} гостей`;
 //   time.textContent = `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`;
-//   hiddenElement(type, !advert.offer.checkin || !advert.offer.checkout);
+//   description.textContent = advert.offer.description;
+//   avatar.setAttribute(`src`, advert.author.avatar);
 //
 //   featureList.textContent = ``;
 //   advert.offer.features.forEach((feature) => {
 //     let newFeatureItem = featureItem.cloneNode();
 //     newFeatureItem.className = `popup__feature`;
-//     newFeatureItem.classList.add(`popup__feature--` + feature);
+//     newFeatureItem.classList.add(`popup__feature--${feature}`);
 //
 //     featureList.appendChild(newFeatureItem);
 //   });
-//   hiddenElement(featureList, featureList.children.length === 0);
 //
-//   description.textContent = advert.offer.description;
 //   photoList.textContent = ``;
 //   advert.offer.photos.forEach((photo) => {
 //     let newPhotoItem = photoItem.cloneNode();
@@ -127,28 +123,28 @@ let getRandomArrayPart = (arr) => {
 //
 //     photoList.appendChild(newPhotoItem);
 //   });
-//   hiddenElement(photoList, photoList.children.length === 0);
 //
-//   avatar.setAttribute(`src`, advert.author.avatar);
-//   hiddenElement(avatar, !advert.author.avatar);
+//   if (!advert.author.avatar) {
+//     hideElement(avatar);
+//   }
 //
 //   return template;
 // };
 
 // let addCartElementToDOM = (advert) => {
 //   let cart = createCartElement(advert);
-//   let mapFiltersContainer = document.querySelector(`.` + MAP_FILTERS_CONTAINER);
 //   mapFiltersContainer.insertAdjacentElement(`beforebegin`, cart);
 // };
 
 let createAdvert = (i) => {
   let type = getRandomFromArray(BUILD_TYPE);
-  let guests = getRandomInteger(MIN_ROOMS, MAX_ROOMS);
-  let price = getRandomInteger(MIN_PRICE, MAX_PRICE);
+  let price = getRandomInteger(TYPE_MIN_PRICE[type], MAX_PRICE);
   let location = {
     x: getRandomInteger(0, mapWidth),
     y: getRandomInteger(MIN_Y, MAX_Y),
   };
+  let rooms = getRandomInteger(MIN_ROOMS, MAX_ROOMS);
+  let guests = getRandomInteger(MIN_ROOMS, rooms);
 
   return {
     author: {
@@ -159,8 +155,8 @@ let createAdvert = (i) => {
       address: `${location.x}, ${location.x}`,
       price,
       type,
-      rooms: getRandomInteger(1, 10),
-      guests: getRandomInteger(1, 10),
+      rooms,
+      guests,
       checkin: getRandomFromArray(CHECKIN),
       checkout: getRandomFromArray(CHECKOUT),
       features: getRandomArrayPart(FEATURES),
@@ -182,8 +178,8 @@ let generateAdverts = () => {
   return result;
 };
 
-let createPin = (advert, template) => {
-  let pin = template.cloneNode(true);
+let createPin = (advert) => {
+  let pin = mapPinTemplate.cloneNode(true);
   let img = pin.getElementsByTagName(`img`)[0];
   img.setAttribute(`src`, advert.author.avatar);
   img.setAttribute(`alt`, advert.offer.title);
@@ -194,9 +190,9 @@ let createPin = (advert, template) => {
 
 let createPins = (adverts) => {
   let fragment = document.createDocumentFragment();
-  let template = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+
   adverts.forEach((advert) => {
-    fragment.appendChild(createPin(advert, template));
+    fragment.appendChild(createPin(advert));
   });
 
   return fragment;
@@ -204,7 +200,7 @@ let createPins = (adverts) => {
 
 let addAdvertsToMap = (adverts) => {
   let fragment = createPins(adverts);
-  document.querySelector(`.` + MAP_CLASS).appendChild(fragment);
+  map.appendChild(fragment);
 };
 
 let adverts = generateAdverts();
@@ -234,9 +230,9 @@ let setStartAddress = () => {
 
 let validateFormPrice = (input) => {
   let price = input.value;
-  let type = document.querySelector(`#type`).value;
+  let type = typeInput.value;
 
-  if (price < input.placeholder) {
+  if (price < Number(input.placeholder)) {
     input.setCustomValidity(`Минимальная цена для этого типа жилья ` + TYPE_MIN_PRICE[type]);
   } else {
     input.setCustomValidity(``);
@@ -265,7 +261,7 @@ let selectTypeHandler = (target) => {
 };
 
 let selectTimeHandler = (value) => {
-  timeinSelet.value = timeoutSelet.value = value;
+  timeinSelect.value = timeoutSelect.value = value;
 };
 
 let setValidityMessage = (select, capacityValue, roomValue) => {
@@ -283,68 +279,77 @@ let setValidityMessage = (select, capacityValue, roomValue) => {
 };
 
 let roomHandler = (select) => {
-  let capacityValue = Number(capacitySelet.value);
+  let capacityValue = Number(capacitySelect.value);
   let roomValue = Number(select.value);
 
   setValidityMessage(select, capacityValue, roomValue);
-  setValidityMessage(capacitySelet, capacityValue, roomValue);
+  setValidityMessage(capacitySelect, capacityValue, roomValue);
 };
 
 let capacityHandler = (select) => {
-  let roomValue = Number(roomNumberSelet.value);
+  let roomValue = Number(roomNumberSelect.value);
   let capacityValue = Number(select.value);
 
   setValidityMessage(select, capacityValue, roomValue);
-  setValidityMessage(roomNumberSelet, capacityValue, roomValue);
+  setValidityMessage(roomNumberSelect, capacityValue, roomValue);
+};
+
+let onFormInput = (evt) => {
+  if (evt.target.matches(`#title`)) {
+    validateFormTitle(evt.target);
+  } else if (evt.target.matches(`#price`)) {
+    validateFormPrice(evt.target);
+  }
+};
+
+let onFormChange = (evt) => {
+  if (evt.target.matches(`#type`)) {
+    selectTypeHandler(evt.target);
+  } else if (evt.target.matches(`#timein`) || evt.target.matches(`#timeout`)) {
+    selectTimeHandler(evt.target.value);
+  } else if (evt.target.matches(`#room_number`)) {
+    roomHandler(evt.target);
+  } else if (evt.target.matches(`#capacity`)) {
+    capacityHandler(evt.target);
+  }
 };
 
 let addFormHandler = () => {
-  addForm.addEventListener(`input`, (evt) => {
-    if (evt.target.matches(`#title`)) {
-      validateFormTitle(evt.target);
-    } else if (evt.target.matches(`#price`)) {
-      validateFormPrice(evt.target);
-    }
-  });
+  addForm.addEventListener(`input`, onFormInput);
+  addForm.addEventListener(`change`, onFormChange);
+};
 
-  addForm.addEventListener(`change`, (evt) => {
-    if (evt.target.matches(`#type`)) {
-      selectTypeHandler(evt.target);
-    } else if (evt.target.matches(`#timein`) || evt.target.matches(`#timeout`)) {
-      selectTimeHandler(evt.target.value);
-    } else if (evt.target.matches(`#room_number`)) {
-      roomHandler(evt.target);
-    } else if (evt.target.matches(`#capacity`)) {
-      capacityHandler(evt.target);
-    }
-  });
+let onMapPinMousedown = (evt) => {
+  if (evt.button !== 0) {
+    return;
+  }
+
+  mainMap.classList.remove(`map--faded`);
+  addForm.classList.remove(`ad-form--disabled`);
+  activeFieldsets();
+};
+
+let onMapPinMouseup = () => {
+  let x = mapPin.offsetTop + MAP_PIN_ACTIVE_HEIGHT / 2;
+  let y = mapPin.offsetLeft + MAP_PIN_WIDTH / 2;
+
+  setAddress(x, y);
+};
+
+let onMapPinKeydown = (evt) => {
+  if (evt.keyCode !== 13) {
+    return;
+  }
+
+  mainMap.classList.remove(`map--faded`);
+  addForm.classList.remove(`ad-form--disabled`);
+  activeFieldsets();
 };
 
 let mapPinHandler = () => {
-  mapPin.addEventListener(`mousedown`, (evt) => {
-    if (evt.button !== 0) {
-      return;
-    }
-
-    document.querySelector(`.map`).classList.remove(`map--faded`);
-    addForm.classList.remove(`ad-form--disabled`);
-    activeFieldsets();
-  });
-  mapPin.addEventListener(`keydown`, (evt) => {
-    if (evt.keyCode !== 13) {
-      return;
-    }
-
-    document.querySelector(`.map`).classList.remove(`map--faded`);
-    addForm.classList.remove(`ad-form--disabled`);
-    activeFieldsets();
-  });
-  mapPin.addEventListener(`mouseup`, () => {
-    let x = mapPin.offsetTop + MAP_PIN_ACTIVE_HEIGHT / 2;
-    let y = mapPin.offsetLeft + MAP_PIN_WIDTH / 2;
-
-    setAddress(x, y);
-  });
+  mapPin.addEventListener(`mousedown`, onMapPinMousedown);
+  mapPin.addEventListener(`keydown`, onMapPinKeydown);
+  mapPin.addEventListener(`mouseup`, onMapPinMouseup);
 };
 
 let setHandlers = () => {
