@@ -203,8 +203,6 @@ let addAdvertsToMap = (adverts) => {
   map.appendChild(fragment);
 };
 
-let adverts = generateAdverts();
-
 let blockFieldsets = () => {
   Array.from(fieldsets).forEach((fieldset) => {
     fieldset.disabled = true;
@@ -314,6 +312,13 @@ let onFormChange = (evt) => {
   }
 };
 
+let activateInterface = () => {
+  activeFieldsets();
+
+  let adverts = generateAdverts();
+  addAdvertsToMap(adverts);
+};
+
 let addFormHandler = () => {
   addForm.addEventListener(`input`, onFormInput);
   addForm.addEventListener(`change`, onFormChange);
@@ -326,7 +331,7 @@ let onMapPinMousedown = (evt) => {
 
   mainMap.classList.remove(`map--faded`);
   addForm.classList.remove(`ad-form--disabled`);
-  activeFieldsets();
+  activateInterface();
 };
 
 let onMapPinMouseup = () => {
@@ -343,7 +348,7 @@ let onMapPinKeydown = (evt) => {
 
   mainMap.classList.remove(`map--faded`);
   addForm.classList.remove(`ad-form--disabled`);
-  activeFieldsets();
+  activateInterface();
 };
 
 let mapPinHandler = () => {
@@ -380,11 +385,6 @@ blockFieldsets();
  * Запускаем обработчики событий
  */
 setHandlers();
-
-/**
- * Добавление объявлений на карту
- */
-addAdvertsToMap(adverts);
 
 /**
  * Выводим детальную информацию по первому объявлению на карту
