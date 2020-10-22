@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Шитиков](https://up.htmlacademy.ru/javascript/21/user/581243).
-* Наставник: [Андрей Устименко](https://htmlacademy.ru/profile/spiritmoon).
+* Наставник: [Василий Подоплелов](https://htmlacademy.ru/profile/id348441).
 
 ---
 
