@@ -1,21 +1,11 @@
 'use strict';
 (() => {
-  let getBuildTypeTranslation = (type) => {
-    switch (type) {
-      case `palace`: return `Дворец`;
-      case `flat`: return `Квартира`;
-      case `house`: return `Дом`;
-      case `bungalow`: return `Бунгало`;
-      default: return null;
-    }
-  };
-
   let hideElement = (element) => {
     element.classList.add(window.data.HIDDEN_CLASS);
   };
 
   let createCartElement = (advert) => {
-    let template = window.data.cardArticle.cloneNode(true);
+    let template = window.data.cardArticleElement.cloneNode(true);
     let featureItem = template.querySelector(`.popup__feature`);
     let featureList = template.querySelector(`.popup__features`);
     let photoItem = template.querySelector(`.popup__photo`);
@@ -32,7 +22,7 @@
     title.textContent = advert.offer.title;
     address.textContent = advert.offer.address;
     price.textContent = `${advert.offer.price}₽/ночь`;
-    type.textContent = getBuildTypeTranslation(advert.offer.type);
+    type.textContent = window.data.BUILD_TYPES[advert.offer.type].translation;
     capacity.textContent = `${advert.offer.rooms} комната(ы) для ${advert.offer.guests} гостей`;
     time.textContent = `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`;
     description.textContent = advert.offer.description;

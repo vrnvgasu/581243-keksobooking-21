@@ -16,28 +16,28 @@
     return randomItems;
   };
 
-  let activateElements = (elems) => {
-    Array.from(elems).forEach((elem) => {
-      elem.disabled = false;
+  let deleteDisabledAtrFromElements = (elements) => {
+    Array.from(elements).forEach((element) => {
+      element.disabled = false;
     });
   };
 
-  let blockElements = (elems) => {
-    Array.from(elems).forEach((elem) => {
-      elem.disabled = true;
+  let setDisabledAtrToElements = (elements) => {
+    Array.from(elements).forEach((element) => {
+      element.disabled = true;
     });
   };
 
-  let makeReadonly = (elem) => {
-    elem.readonly = true;
+  let setReadonlyAtrToElement = (element) => {
+    element.readonly = true;
   };
 
   window.util = {
     getRandomFromArray,
     getRandomInteger,
     getRandomArrayPart,
-    activateElements,
-    blockElements,
-    makeReadonly,
+    deleteDisabledAtrFromElements,
+    setDisabledAtrToElements,
+    setReadonlyAtrToElement,
   };
 })();

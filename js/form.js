@@ -5,7 +5,7 @@
     let type = window.data.typeInput.value;
 
     if (price < Number(input.placeholder)) {
-      input.setCustomValidity(`Минимальная цена для этого типа жилья ` + window.data.TYPE_MIN_PRICE[type]);
+      input.setCustomValidity(`Минимальная цена для этого типа жилья ` + window.data.BUILD_TYPES[type].price);
     } else {
       input.setCustomValidity(``);
     }
@@ -28,7 +28,7 @@
   };
 
   let selectTypeHandler = (target) => {
-    window.data.priceInput.placeholder = window.data.TYPE_MIN_PRICE[target.value];
+    window.data.priceInput.placeholder = window.data.BUILD_TYPES[target.value].price;
     validateFormPrice(window.data.priceInput);
   };
 
@@ -86,12 +86,12 @@
     }
   };
 
-  let addFormHandler = () => {
-    window.data.addForm.addEventListener(`input`, onFormInput);
-    window.data.addForm.addEventListener(`change`, onFormChange);
+  let addFormHandlers = () => {
+    window.data.addFormElement.addEventListener(`input`, onFormInput);
+    window.data.addFormElement.addEventListener(`change`, onFormChange);
   };
 
   window.form = {
-    addFormHandler,
+    addFormHandlers,
   };
 })();

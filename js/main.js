@@ -4,7 +4,7 @@ let bootstrap = () => {
   /**
    * Блокируем поле 'Адрес'
    */
-  window.util.makeReadonly(window.data.addressInput);
+  window.util.setReadonlyAtrToElement(window.data.addressInput);
 
   /**
    * Начальные координаты адреса
@@ -14,7 +14,7 @@ let bootstrap = () => {
   /**
    * Блокируем интерактивные элементы
    */
-  window.util.blockElements(window.data.fieldsets);
+  window.util.setDisabledAtrToElements(window.data.fieldsetElements);
 
   /**
    * Запускаем обработчики событий

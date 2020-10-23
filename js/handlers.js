@@ -1,8 +1,8 @@
 'use strict';
 (() => {
   let setHandlers = () => {
-    window.form.addFormHandler();
-    window.map.mapPinHandler();
+    window.form.addFormHandlers();
+    window.map.mapPinHandlers();
   };
 
   window.handlers = {

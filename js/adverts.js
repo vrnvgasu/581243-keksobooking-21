@@ -1,8 +1,8 @@
 'use strict';
 (() => {
   let createAdvert = (i) => {
-    let type = window.util.getRandomFromArray(window.data.BUILD_TYPE);
-    let price = window.util.getRandomInteger(window.data.TYPE_MIN_PRICE[type], window.data.MAX_PRICE);
+    let type = window.util.getRandomFromArray(Object.keys(window.data.BUILD_TYPES));
+    let price = window.util.getRandomInteger(window.data.BUILD_TYPES[type].price, window.data.MAX_PRICE);
     let location = {
       x: window.util.getRandomInteger(0, window.data.mapWidth),
       y: window.util.getRandomInteger(window.data.MIN_Y, window.data.MAX_Y),
@@ -21,8 +21,8 @@
         type,
         rooms,
         guests,
-        checkin: window.util.getRandomFromArray(window.data.CHECKIN),
-        checkout: window.util.getRandomFromArray(window.data.CHECKOUT),
+        checkin: window.util.getRandomFromArray(window.data.CHECKINS),
+        checkout: window.util.getRandomFromArray(window.data.CHECKOUTS),
         features: window.util.getRandomArrayPart(window.data.FEATURES),
         description: `Сдается ${type} на ${guests} гостей за ${price}`,
         photos: window.util.getRandomArrayPart(window.data.PHOTOS),
