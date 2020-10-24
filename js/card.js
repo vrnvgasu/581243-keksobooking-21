@@ -5,7 +5,7 @@
   };
 
   let createCartElement = (advert) => {
-    let template = window.data.cardArticleElement.cloneNode(true);
+    let template = window.data.cardArticleTemplate.cloneNode(true);
     let featureItem = template.querySelector(`.popup__feature`);
     let featureList = template.querySelector(`.popup__features`);
     let photoItem = template.querySelector(`.popup__photo`);
@@ -52,12 +52,28 @@
     return template;
   };
 
+  let onPopupCloseClick = () => {
+    deleteCardElements();
+  };
+
+  let deleteCardElements = () => {
+    let cards = window.data.mainMapElement.querySelectorAll(`.map__card`);
+    Array.from(cards).forEach((card) => {
+      card.remove();
+    });
+  };
+
   let addCartElementToDOM = (advert) => {
-    let cart = createCartElement(advert);
-    window.data.mapFiltersContainer.insertAdjacentElement(`beforebegin`, cart);
+    deleteCardElements();
+    let card = createCartElement(advert);
+    window.data.mapFiltersContainer.insertAdjacentElement(`beforebegin`, card);
+
+    let popupCloseElement = card.querySelector(`.popup__close`);
+    popupCloseElement.addEventListener(`click`, onPopupCloseClick);
   };
 
   window.card = {
     addCartElementToDOM,
+    deleteCardElements,
   };
 })();

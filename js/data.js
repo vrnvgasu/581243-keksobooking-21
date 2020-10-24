@@ -52,7 +52,7 @@
   window.data.mapFiltersContainer = document.querySelector(`.map__filters-container`);
   window.data.mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   window.data.mapElement = document.querySelector(`.map__pins`);
-  window.data.cardArticleElement = document.querySelector(`#card`).content.querySelector(`.map__card`);
+  window.data.cardArticleTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   window.data.mapWidth = window.data.mapElement.offsetWidth;
   window.data.fieldsetElements = document.querySelectorAll(`fieldset`);
   window.data.mapPinElement = document.querySelector(`.map__pin--main`);
