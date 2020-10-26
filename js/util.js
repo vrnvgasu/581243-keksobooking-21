@@ -43,6 +43,6 @@
     deleteDisabledAtrFromElements,
     setDisabledAtrToElements,
     setReadonlyAtrToElement,
-    onError
+    onError,
   };
 })();
