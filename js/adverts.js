@@ -1,9 +1,7 @@
 'use strict';
 (() => {
-  let prepareAdvers = (adverts) => {
-    adverts.filter((advert) {
-
-    });
+  let filterAdverts = (adverts) => {
+    return adverts.filter((advert) => advert.offer);
   };
 
   let generateAdverts = () => {
@@ -12,5 +10,6 @@
 
   window.adverts = {
     generateAdverts,
+    filterAdverts,
   };
 })();

@@ -3,14 +3,16 @@
   let interfaceActiveStatus = false;
 
   let addAdvertsToMap = (adverts) => {
+    window.error.deleteErrorElement();
+    adverts = window.adverts.filterAdverts(adverts);
     let fragment = window.pin.createPins(adverts);
     window.data.mapElement.appendChild(fragment);
 
-    pinHandlers(adverts);
+    addPinHandlers(adverts);
   };
 
-  let activateInterface = () => {
-    if (interfaceActiveStatus) {
+  let activateInterface = (reload = false) => {
+    if (interfaceActiveStatus && !reload) {
       return;
     }
 
@@ -49,7 +51,7 @@
     activateInterface();
   };
 
-  let mapPinHandlers = () => {
+  let addMapPinHandlers = () => {
     window.data.mapPinElement.addEventListener(`mousedown`, onMapPinMousedown);
     window.data.mapPinElement.addEventListener(`keydown`, onMapPinKeydown);
     // window.data.mapPinElement.addEventListener(`mouseup`, onMapPinMouseup);
@@ -64,32 +66,33 @@
 
   let onPinClick = (adverts) => {
     return (evt) => {
-      let target = evt.target.closest(`button`);
+      let button = evt.target.closest(`button`);
 
-      if (!target) {
+      if (!button) {
         return;
       }
 
-      if (target.classList.contains(`map__pin`) && !target.classList.contains(`map__pin--main`)) {
-        let advert = adverts[target.dataset.adverPosition];
+      if (button.classList.contains(`map__pin`) && !button.classList.contains(`map__pin--main`)) {
+        let advert = adverts[button.dataset.adverPosition];
         window.card.addCartElementToDOM(advert);
       }
     };
   };
 
-  let pinHandlers = (adverts) => {
+  let addPinHandlers = (adverts) => {
     document.addEventListener(`click`, onPinClick(adverts));
     document.addEventListener(`keydown`, (evt) => {
       if (evt.keyCode === 27) {
-        window.card.deleteCardElements(adverts);
+        window.card.deleteCardElements();
       }
     });
   };
 
   window.map = {
-    mapPinHandlers,
+    addMapPinHandlers,
     setStartAddress,
-    pinHandlers,
-    addAdvertsToMap
+    addPinHandlers,
+    addAdvertsToMap,
+    activateInterface,
   };
 })();

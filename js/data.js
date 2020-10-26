@@ -34,7 +34,7 @@
   window.data.MIN_ROOMS = 1;
   window.data.MAX_ROOMS = 3;
   window.data.MAX_PRICE = 1000000;
-  window.data.ADVERTS_COUNT = 8;
+  window.data.MAX_ADVERTS_COUNT = 5;
 
   /**
    * Валидация
@@ -65,6 +65,7 @@
   window.data.addFormElement = document.querySelector(`.ad-form`);
   window.data.typeInput = document.querySelector(`#type`);
   window.data.mainMapElement = document.querySelector(`.map`);
+  window.data.errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
 
   /**
    * api

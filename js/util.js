@@ -33,7 +33,7 @@
   };
 
   let onError = (message) => {
-    console.error(message);
+    window.error.addErrorElement(message);
   };
 
   window.util = {
