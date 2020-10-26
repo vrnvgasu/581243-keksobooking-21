@@ -50,7 +50,7 @@
     activateInterface();
   };
 
-  let mapPinHandlers = () => {
+  let addMapPinHandlers = () => {
     window.data.mapPinElement.addEventListener(`mousedown`, onMapPinMousedown);
     window.data.mapPinElement.addEventListener(`keydown`, onMapPinKeydown);
     // window.data.mapPinElement.addEventListener(`mouseup`, onMapPinMouseup);
@@ -64,19 +64,19 @@
   };
 
   let onPinClick = (evt) => {
-    let target = evt.target.closest(`button`);
+    let button = evt.target.closest(`button`);
 
-    if (!target) {
+    if (!button) {
       return;
     }
 
-    if (target.classList.contains(`map__pin`) && !target.classList.contains(`map__pin--main`)) {
-      let advert = adverts[target.dataset.adverPosition];
+    if (button.classList.contains(`map__pin`) && !button.classList.contains(`map__pin--main`)) {
+      let advert = adverts[button.dataset.adverPosition];
       window.card.addCartElementToDOM(advert);
     }
   };
 
-  let pinHandlers = () => {
+  let addPinHandlers = () => {
     document.addEventListener(`click`, onPinClick);
     document.addEventListener(`keydown`, (evt) => {
       if (evt.keyCode === 27) {
@@ -86,8 +86,8 @@
   };
 
   window.map = {
-    mapPinHandlers,
+    addMapPinHandlers,
     setStartAddress,
-    pinHandlers,
+    addPinHandlers,
   };
 })();

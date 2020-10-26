@@ -57,10 +57,10 @@
   };
 
   let deleteCardElements = () => {
-    let cards = window.data.mainMapElement.querySelectorAll(`.map__card`);
-    Array.from(cards).forEach((card) => {
+    let card = window.data.mainMapElement.querySelector(`.map__card`);
+    if (card) {
       card.remove();
-    });
+    }
   };
 
   let addCartElementToDOM = (advert) => {
