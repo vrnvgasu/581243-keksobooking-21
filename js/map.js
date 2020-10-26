@@ -66,14 +66,14 @@
 
   let onPinClick = (adverts) => {
     return (evt) => {
-      let button = evt.target.closest(`button`);
+      let pinButton = evt.target.closest(`button`);
 
-      if (!button) {
+      if (!pinButton) {
         return;
       }
 
-      if (button.classList.contains(`map__pin`) && !button.classList.contains(`map__pin--main`)) {
-        let advert = adverts[button.dataset.adverPosition];
+      if (pinButton.classList.contains(`map__pin`) && !pinButton.classList.contains(`map__pin--main`)) {
+        let advert = adverts[pinButton.dataset.adverPosition];
         window.card.addCartElementToDOM(advert);
       }
     };
