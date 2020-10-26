@@ -65,4 +65,9 @@
   window.data.addFormElement = document.querySelector(`.ad-form`);
   window.data.typeInput = document.querySelector(`#type`);
   window.data.mainMapElement = document.querySelector(`.map`);
+
+  /**
+   * api
+   */
+  window.data.loadUrl = `https://21.javascript.pages.academy/keksobooking/data`;
 })();

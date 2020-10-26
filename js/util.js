@@ -32,6 +32,10 @@
     element.readonly = true;
   };
 
+  let onError = (message) => {
+    console.error(message);
+  };
+
   window.util = {
     getRandomFromArray,
     getRandomInteger,
@@ -39,5 +43,6 @@
     deleteDisabledAtrFromElements,
     setDisabledAtrToElements,
     setReadonlyAtrToElement,
+    onError
   };
 })();
