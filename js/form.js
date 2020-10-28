@@ -106,21 +106,28 @@
     });
   };
 
+  let onAddFormSubmit = (evt) => {
+    evt.preventDefault();
+
+    window.load(
+        window.data.uploadUrl,
+        window.util.onSuccess,
+        window.util.onError,
+        `POST`,
+        new FormData(window.data.addFormElement)
+    );
+  };
+
+  let onAdFormResetElementClick = (evt) => {
+    evt.preventDefault();
+    clearForm();
+  };
+
   let addFormHandlers = () => {
     window.data.addFormElement.addEventListener(`input`, onFormInput);
     window.data.addFormElement.addEventListener(`change`, onFormChange);
-    window.data.addFormElement.addEventListener(`submit`, (evt) => {
-      evt.preventDefault();
-
-
-      window.load(
-          window.data.uploadUrl,
-          window.util.onSuccess,
-          window.util.onError,
-          `POST`,
-          new FormData(window.data.addFormElement)
-      );
-    });
+    window.data.addFormElement.addEventListener(`submit`, onAddFormSubmit);
+    window.data.adFormResetElement.addEventListener(`click`, onAdFormResetElementClick);
   };
 
   window.form = {

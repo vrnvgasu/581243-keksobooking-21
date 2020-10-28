@@ -75,6 +75,7 @@
   window.data.adFormFeatireInputs = window.data.addFormElement.querySelectorAll(`.ad-form__element--wide input`);
   window.data.mapFilterForm = document.querySelector(`.map__filters`);
   window.data.filterFeatireInputs = window.data.mapFilterForm.querySelectorAll(`#housing-features input`);
+  window.data.adFormResetElement = document.querySelector(`.ad-form__reset`);
 
   /**
    * api
