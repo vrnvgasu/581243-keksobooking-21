@@ -3,11 +3,8 @@
   let errorElement;
   let errorButtonElement;
 
-  let onErrorButtonClick = (evt) => {
-    // отключаем ивент, чтобы пользователь не вызывал загрузку объявлений несколько раз при медленной связи
-    evt.target.removeEventListener(`click`, onErrorButtonClick);
-
-    window.map.activateInterface(true);
+  let onErrorButtonClick = () => {
+    deleteErrorElement();
   };
 
   let addErrorElement = (message) => {

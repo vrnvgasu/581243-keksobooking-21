@@ -36,6 +36,8 @@
   window.data.MAX_PRICE = 1000000;
   window.data.MAX_ADVERTS_COUNT = 5;
 
+  window.data.adverts = [];
+
   /**
    * Валидация
    */
@@ -55,6 +57,7 @@
   window.data.cardArticleTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   window.data.mapWidth = window.data.mapElement.offsetWidth;
   window.data.fieldsetElements = document.querySelectorAll(`fieldset`);
+  window.data.mapFilterElements = document.querySelectorAll(`.map__filter`);
   window.data.mapPinElement = document.querySelector(`.map__pin--main`);
   window.data.addressInput = document.querySelector(`#address`);
   window.data.priceInput = document.querySelector(`#price`);

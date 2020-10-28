@@ -33,6 +33,7 @@
   };
 
   let onError = (message) => {
+    window.map.blockInterface();
     window.error.addErrorElement(message);
   };
 
