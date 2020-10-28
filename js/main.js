@@ -1,20 +1,7 @@
 'use strict';
 
 let bootstrap = () => {
-  /**
-   * Блокируем поле 'Адрес'
-   */
-  window.util.setReadonlyAtrToElement(window.data.addressInput);
-
-  /**
-   * Начальные координаты адреса
-   */
-  window.map.setStartAddress();
-
-  /**
-   * Блокируем интерактивные элементы
-   */
-  window.util.setDisabledAtrToElements(window.data.fieldsetElements);
+  window.map.blockInterface();
 
   /**
    * Запускаем обработчики событий

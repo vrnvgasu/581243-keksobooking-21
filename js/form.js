@@ -86,12 +86,47 @@
     }
   };
 
+  let clearForm = () => {
+    window.data.addFormElement.querySelector(`#title`).value = ``;
+    window.data.addFormElement.querySelector(`#price`).value = ``;
+    window.data.addFormElement.querySelector(`#price`).placeholder = `1000`;
+    window.data.addFormElement.querySelector(`#description`).value = ``;
+    window.data.addFormElement.querySelector(`#type`).value = `flat`;
+    window.data.addFormElement.querySelector(`#timein`).value = `12:00`;
+    window.data.addFormElement.querySelector(`#timeout`).value = `12:00`;
+    window.data.addFormElement.querySelector(`#room_number`).value = `1`;
+    window.data.addFormElement.querySelector(`#capacity`).value = `1`;
+    window.data.addFormElement.querySelector(`#images`).value = ``;
+    window.data.addFormElement.querySelector(`#avatar`).value = ``;
+    window.data.headerPreviewImgElement.src = `img/muffin-grey.svg`;
+    window.data.adFormPhotoElement.textContent = ``;
+
+    Array.from(window.data.adFormFeatireInputs).forEach((featureInput) => {
+      featureInput.checked = false;
+    });
+  };
+
   let addFormHandlers = () => {
     window.data.addFormElement.addEventListener(`input`, onFormInput);
     window.data.addFormElement.addEventListener(`change`, onFormChange);
+    window.data.addFormElement.addEventListener(`submit`, (evt) => {
+      evt.preventDefault();
+
+
+      window.load(
+          window.data.uploadUrl,
+          () => {
+            console.log('все ок');
+          },
+          window.util.onError,
+          `POST`,
+          new FormData(window.data.addFormElement)
+      );
+    });
   };
 
   window.form = {
     addFormHandlers,
+    clearForm,
   };
 })();

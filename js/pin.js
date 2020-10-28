@@ -1,5 +1,12 @@
 'use strict';
 (() => {
+  let deletePins = () => {
+    let pins = window.data.mapElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    pins.forEach((pin) => {
+      pin.remove();
+    });
+  };
+
   let createPin = (advert, i) => {
     let pin = window.data.mapPinTemplate.cloneNode(true);
     let img = pin.getElementsByTagName(`img`)[0];
@@ -24,5 +31,6 @@
   window.pin = {
     createPin,
     createPins,
+    deletePins,
   };
 })();

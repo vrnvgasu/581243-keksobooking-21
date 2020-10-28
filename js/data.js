@@ -36,6 +36,8 @@
   window.data.MAX_PRICE = 1000000;
   window.data.MAX_ADVERTS_COUNT = 5;
 
+  window.data.adverts = [];
+
   /**
    * Валидация
    */
@@ -55,6 +57,7 @@
   window.data.cardArticleTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   window.data.mapWidth = window.data.mapElement.offsetWidth;
   window.data.fieldsetElements = document.querySelectorAll(`fieldset`);
+  window.data.mapFilterElements = document.querySelectorAll(`.map__filter`);
   window.data.mapPinElement = document.querySelector(`.map__pin--main`);
   window.data.addressInput = document.querySelector(`#address`);
   window.data.priceInput = document.querySelector(`#price`);
@@ -66,9 +69,13 @@
   window.data.typeInput = document.querySelector(`#type`);
   window.data.mainMapElement = document.querySelector(`.map`);
   window.data.errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+  window.data.headerPreviewImgElement = window.data.addFormElement.querySelector(`.ad-form-header__preview img`);
+  window.data.adFormPhotoElement = window.data.addFormElement.querySelector(`.ad-form__photo`);
+  window.data.adFormFeatireInputs = window.data.addFormElement.querySelectorAll(`.ad-form__element--wide input`);
 
   /**
    * api
    */
   window.data.loadUrl = `https://21.javascript.pages.academy/keksobooking/data`;
+  window.data.uploadUrl = `https://21.javascript.pages.academy/keksobooking`;
 })();
