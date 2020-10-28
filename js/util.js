@@ -32,6 +32,16 @@
     element.readonly = true;
   };
 
+  let onError = (message) => {
+    window.map.blockInterface();
+    window.error.addErrorElement(message);
+  };
+
+  let onSuccess = () => {
+    window.map.blockInterface();
+    window.success.addSuccessElement();
+  };
+
   window.util = {
     getRandomFromArray,
     getRandomInteger,
@@ -39,5 +49,7 @@
     deleteDisabledAtrFromElements,
     setDisabledAtrToElements,
     setReadonlyAtrToElement,
+    onError,
+    onSuccess,
   };
 })();

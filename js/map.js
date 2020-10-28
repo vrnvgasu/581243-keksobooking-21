@@ -1,25 +1,42 @@
 'use strict';
 (() => {
-  const adverts = window.adverts.generateAdverts();
   let interfaceActiveStatus = false;
 
-  let addAdvertsToMap = () => {
+  let addAdvertsToMap = (adverts) => {
+    window.data.adverts = window.adverts.filterAdverts(adverts);
     let fragment = window.pin.createPins(adverts);
     window.data.mapElement.appendChild(fragment);
+
+    addPinHandlers();
+  };
+
+  let blockInterface = () => {
+    window.util.setReadonlyAtrToElement(window.data.addressInput);
+    window.map.setStartAddress();
+    window.util.setDisabledAtrToElements(window.data.fieldsetElements);
+    window.util.setDisabledAtrToElements(window.data.mapFilterElements);
+
+    if (interfaceActiveStatus) {
+      window.pin.deletePins();
+      window.card.deleteCardElements();
+      window.data.mainMapElement.classList.add(`map--faded`);
+      window.data.addFormElement.classList.add(`ad-form--disabled`);
+      window.data.mapPinElement.addEventListener(`keydown`, onMapPinKeydown);
+      document.removeEventListener(`click`, onPinClick);
+      window.form.clearForm();
+      window.filter.clearFilter();
+    }
+
+    interfaceActiveStatus = false;
   };
 
   let activateInterface = () => {
-    if (interfaceActiveStatus) {
-      return;
-    }
-
     interfaceActiveStatus = true;
     window.util.deleteDisabledAtrFromElements(window.data.fieldsetElements);
+    window.util.deleteDisabledAtrFromElements(window.data.mapFilterElements);
     window.data.mainMapElement.classList.remove(`map--faded`);
     window.data.addFormElement.classList.remove(`ad-form--disabled`);
-
-    addAdvertsToMap();
-
+    window.adverts.generateAdverts();
     window.data.mapPinElement.removeEventListener(`keydown`, onMapPinKeydown);
   };
 
@@ -71,17 +88,27 @@
     }
 
     if (pinButton.classList.contains(`map__pin`) && !pinButton.classList.contains(`map__pin--main`)) {
-      let advert = adverts[pinButton.dataset.adverPosition];
+      let advert = window.data.adverts[pinButton.dataset.adverPosition];
       window.card.addCartElementToDOM(advert);
     }
   };
 
   let addPinHandlers = () => {
     document.addEventListener(`click`, onPinClick);
+  };
+
+  let clearMapHandlers = () => {
     document.addEventListener(`keydown`, (evt) => {
       if (evt.keyCode === 27) {
         window.card.deleteCardElements();
+        window.error.deleteErrorElement();
+        window.success.deleteSuccessElement();
       }
+    });
+
+    document.addEventListener(`mousedown`, () => {
+      window.error.deleteErrorElement();
+      window.success.deleteSuccessElement();
     });
   };
 
@@ -89,5 +116,9 @@
     addMapPinHandlers,
     setStartAddress,
     addPinHandlers,
+    addAdvertsToMap,
+    activateInterface,
+    blockInterface,
+    clearMapHandlers,
   };
 })();
