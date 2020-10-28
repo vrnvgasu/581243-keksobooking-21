@@ -115,9 +115,7 @@
 
       window.load(
           window.data.uploadUrl,
-          () => {
-            console.log('все ок');
-          },
+          window.util.onSuccess,
           window.util.onError,
           `POST`,
           new FormData(window.data.addFormElement)

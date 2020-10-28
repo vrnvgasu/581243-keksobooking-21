@@ -69,9 +69,12 @@
   window.data.typeInput = document.querySelector(`#type`);
   window.data.mainMapElement = document.querySelector(`.map`);
   window.data.errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+  window.data.successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
   window.data.headerPreviewImgElement = window.data.addFormElement.querySelector(`.ad-form-header__preview img`);
   window.data.adFormPhotoElement = window.data.addFormElement.querySelector(`.ad-form__photo`);
   window.data.adFormFeatireInputs = window.data.addFormElement.querySelectorAll(`.ad-form__element--wide input`);
+  window.data.mapFilterForm = document.querySelector(`.map__filters`);
+  window.data.filterFeatireInputs = window.data.mapFilterForm.querySelectorAll(`#housing-features input`);
 
   /**
    * api

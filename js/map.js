@@ -3,7 +3,6 @@
   let interfaceActiveStatus = false;
 
   let addAdvertsToMap = (adverts) => {
-    window.error.deleteErrorElement();
     window.data.adverts = window.adverts.filterAdverts(adverts);
     let fragment = window.pin.createPins(adverts);
     window.data.mapElement.appendChild(fragment);
@@ -24,16 +23,14 @@
       window.data.addFormElement.classList.add(`ad-form--disabled`);
       window.data.mapPinElement.addEventListener(`keydown`, onMapPinKeydown);
       document.removeEventListener(`click`, onPinClick);
+      window.form.clearForm();
+      window.filter.clearFilter();
     }
 
     interfaceActiveStatus = false;
   };
 
-  let activateInterface = (reload = false) => {
-    if (interfaceActiveStatus && !reload) {
-      return;
-    }
-
+  let activateInterface = () => {
     interfaceActiveStatus = true;
     window.util.deleteDisabledAtrFromElements(window.data.fieldsetElements);
     window.util.deleteDisabledAtrFromElements(window.data.mapFilterElements);
@@ -98,10 +95,20 @@
 
   let addPinHandlers = () => {
     document.addEventListener(`click`, onPinClick);
+  };
+
+  let clearMapHandlers = () => {
     document.addEventListener(`keydown`, (evt) => {
       if (evt.keyCode === 27) {
         window.card.deleteCardElements();
+        window.error.deleteErrorElement();
+        window.success.deleteSuccessElement();
       }
+    });
+
+    document.addEventListener(`mousedown`, () => {
+      window.error.deleteErrorElement();
+      window.success.deleteSuccessElement();
     });
   };
 
@@ -112,5 +119,6 @@
     addAdvertsToMap,
     activateInterface,
     blockInterface,
+    clearMapHandlers,
   };
 })();

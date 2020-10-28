@@ -34,8 +34,12 @@
 
   let onError = (message) => {
     window.map.blockInterface();
-    window.form.clearForm();
     window.error.addErrorElement(message);
+  };
+
+  let onSuccess = () => {
+    window.map.blockInterface();
+    window.success.addSuccessElement();
   };
 
   window.util = {
@@ -46,5 +50,6 @@
     setDisabledAtrToElements,
     setReadonlyAtrToElement,
     onError,
+    onSuccess,
   };
 })();
