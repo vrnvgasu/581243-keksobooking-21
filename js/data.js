@@ -48,9 +48,9 @@
    * Размеры метки
    */
   window.data.MAP_PIN_WIDTH = 64;
-  window.data.MAP_PIN_HEIGHT = 66;
-  window.data.MAP_PIN_IMG_WIDTH = 62;
-  window.data.MAP_PIN_IMG_HEIGHT = 62;
+  window.data.MAP_PIN_HEIGHT = 70;
+  window.data.PIN_WIDTH = 50;
+  window.data.PIN_HEIGHT = 70;
 
   window.data.mapFiltersContainer = document.querySelector(`.map__filters-container`);
   window.data.mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -60,7 +60,6 @@
   window.data.fieldsetElements = document.querySelectorAll(`fieldset`);
   window.data.mapFilterElements = document.querySelectorAll(`.map__filter`);
   window.data.mapPinElement = document.querySelector(`.map__pin--main`);
-  window.data.mapPinImg = window.data.mapPinElement.querySelector(`img`);
   window.data.addressInput = document.querySelector(`#address`);
   window.data.priceInput = document.querySelector(`#price`);
   window.data.timeinSelect = document.querySelector(`#timein`);
