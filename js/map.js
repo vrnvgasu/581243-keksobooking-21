@@ -36,7 +36,13 @@
     window.util.deleteDisabledAtrFromElements(window.data.mapFilterElements);
     window.data.mainMapElement.classList.remove(`map--faded`);
     window.data.addFormElement.classList.remove(`ad-form--disabled`);
-    window.adverts.generateAdverts();
+
+    if (window.data.adverts.length === 0) {
+      window.adverts.generateAdverts();
+    } else {
+      addAdvertsToMap(window.data.adverts);
+    }
+
     window.data.mapPinElement.removeEventListener(`keydown`, onMapPinKeydown);
   };
 
