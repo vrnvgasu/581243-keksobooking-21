@@ -47,9 +47,10 @@
   /**
    * Размеры метки
    */
-  window.data.MAP_PIN_WIDTH = 65;
-  window.data.MAP_PIN_PASSIVE_HEIGHT = 65;
-  window.data.MAP_PIN_ACTIVE_HEIGHT = 77;
+  window.data.MAP_PIN_WIDTH = 64;
+  window.data.MAP_PIN_HEIGHT = 66;
+  window.data.MAP_PIN_IMG_WIDTH = 62;
+  window.data.MAP_PIN_IMG_HEIGHT = 62;
 
   window.data.mapFiltersContainer = document.querySelector(`.map__filters-container`);
   window.data.mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -59,6 +60,7 @@
   window.data.fieldsetElements = document.querySelectorAll(`fieldset`);
   window.data.mapFilterElements = document.querySelectorAll(`.map__filter`);
   window.data.mapPinElement = document.querySelector(`.map__pin--main`);
+  window.data.mapPinImg = window.data.mapPinElement.querySelector(`img`);
   window.data.addressInput = document.querySelector(`#address`);
   window.data.priceInput = document.querySelector(`#price`);
   window.data.timeinSelect = document.querySelector(`#timein`);
@@ -76,6 +78,8 @@
   window.data.mapFilterForm = document.querySelector(`.map__filters`);
   window.data.filterFeatireInputs = window.data.mapFilterForm.querySelectorAll(`#housing-features input`);
   window.data.adFormResetElement = document.querySelector(`.ad-form__reset`);
+
+  window.data.maxX = window.data.mapElement.clientWidth;
 
   /**
    * api

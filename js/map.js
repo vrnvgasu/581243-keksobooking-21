@@ -25,6 +25,7 @@
       document.removeEventListener(`click`, onPinClick);
       window.form.clearForm();
       window.filter.clearFilter();
+      window.move.deleteMoveHandlers();
     }
 
     interfaceActiveStatus = false;
@@ -32,6 +33,7 @@
 
   let activateInterface = () => {
     interfaceActiveStatus = true;
+    setAddressForActiveMap();
     window.util.deleteDisabledAtrFromElements(window.data.fieldsetElements);
     window.util.deleteDisabledAtrFromElements(window.data.mapFilterElements);
     window.data.mainMapElement.classList.remove(`map--faded`);
@@ -44,6 +46,7 @@
     }
 
     window.data.mapPinElement.removeEventListener(`keydown`, onMapPinKeydown);
+    window.move.setMoveHandlers();
   };
 
   let setAddress = (x, y) => {
@@ -57,13 +60,6 @@
 
     activateInterface();
   };
-
-  // let onMapPinMouseup = () => {
-  //   let x = window.data.mapPinElement.offsetTop + window.data.MAP_PIN_ACTIVE_HEIGHT / 2;
-  //   let y = window.data.mapPinElement.offsetLeft + window.data.MAP_PIN_WIDTH / 2;
-  //
-  //   setAddress(x, y);
-  // };
 
   let onMapPinKeydown = (evt) => {
     if (evt.keyCode !== 13) {
@@ -80,10 +76,16 @@
   };
 
   let setStartAddress = () => {
-    let x = window.data.mapPinElement.offsetTop + window.data.MAP_PIN_PASSIVE_HEIGHT / 2;
-    let y = window.data.mapPinElement.offsetLeft + window.data.MAP_PIN_WIDTH / 2;
+    let y = window.data.mapPinElement.offsetTop + window.data.MAP_PIN_HEIGHT / 2;
+    let x = window.data.mapPinElement.offsetLeft + window.data.MAP_PIN_WIDTH / 2;
 
     setAddress(x, y);
+  };
+
+  let setAddressForActiveMap = () => {
+    let y = window.data.mapPinElement.offsetTop;
+    let x = window.data.mapPinElement.offsetLeft;
+    setAddress(x + (window.data.MAP_PIN_WIDTH / 2), y + window.data.MAP_PIN_HEIGHT);
   };
 
   let onPinClick = (evt) => {
@@ -126,5 +128,6 @@
     activateInterface,
     blockInterface,
     clearMapHandlers,
+    setAddress,
   };
 })();
