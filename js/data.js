@@ -81,6 +81,42 @@
   window.data.maxX = window.data.mapElement.clientWidth;
 
   /**
+   * Filters
+   */
+  window.data.filters = {};
+  window.data.filterTypes = {
+    type: {
+      name: `housing-type`,
+    },
+    price: {
+      name: `housing-price`,
+      count: {
+        low: {
+          min: 0,
+          max: 9999,
+        },
+        middle: {
+          min: 10000,
+          max: 50000,
+        },
+        high: {
+          min: 50001,
+          max: 1000000000,
+        },
+      }
+    },
+    rooms: {
+      name: `housing-rooms`,
+    },
+    guests: {
+      name: `housing-guests`,
+    },
+    features: {
+      name: `features`,
+    },
+  };
+
+  /**
    * api
    */
   window.data.loadUrl = `https://21.javascript.pages.academy/keksobooking/data`;
