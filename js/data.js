@@ -37,6 +37,7 @@
   window.data.MAX_ADVERTS_COUNT = 5;
 
   window.data.adverts = [];
+  window.data.DEBOUNCE_INTERVAL = 500; // ms
 
   /**
    * Валидация

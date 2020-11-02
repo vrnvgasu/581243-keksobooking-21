@@ -42,6 +42,19 @@
     window.success.addSuccessElement();
   };
 
+  let debounce = (cb) => {
+    let lastTimeout = null;
+
+    return (...parameters) => {
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(() => {
+        cb(...parameters);
+      }, window.data.DEBOUNCE_INTERVAL);
+    };
+  };
+
   window.util = {
     getRandomFromArray,
     getRandomInteger,
@@ -51,5 +64,6 @@
     setReadonlyAtrToElement,
     onError,
     onSuccess,
+    debounce,
   };
 })();
