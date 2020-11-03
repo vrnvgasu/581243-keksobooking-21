@@ -73,6 +73,15 @@ let onFormInput = (evt) => {
   }
 };
 
+let setBuildPreviewImg = (input) => {
+  let previewImg = document.createElement(`img`);
+  previewImg.style.width = `100%`;
+  previewImg.style.height = `100%`;
+  window.util.loadImg(input, previewImg);
+  window.data.adFormPhotoElement.textContent = ``;
+  window.data.adFormPhotoElement.append(previewImg);
+};
+
 let onFormChange = (evt) => {
   if (evt.target.matches(`#type`)) {
     selectTypeHandler(evt.target);
@@ -82,6 +91,10 @@ let onFormChange = (evt) => {
     roomHandler(evt.target);
   } else if (evt.target.matches(`#capacity`)) {
     capacityHandler(evt.target);
+  } else if (evt.target.matches(`#avatar`)) {
+    window.util.loadImg(evt.target, window.data.avatarImg);
+  } else if (evt.target.matches(`#images`)) {
+    setBuildPreviewImg(evt.target);
   }
 };
 
