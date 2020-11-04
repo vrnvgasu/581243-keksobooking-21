@@ -54,6 +54,25 @@ let debounce = (cb) => {
   };
 };
 
+let loadImg = (inputElement, previewImg) => {
+  let file = inputElement.files[0];
+  let fileName = file.name.toLowerCase();
+
+  let matches = window.data.FILE_TYPES.some((ending) => {
+    return fileName.endsWith(ending);
+  });
+
+  if (matches) {
+    let reader = new FileReader();
+
+    reader.addEventListener(`load`, () => {
+      previewImg.src = reader.result;
+    });
+
+    reader.readAsDataURL(file);
+  }
+};
+
 window.util = {
   getRandomFromArray,
   getRandomInteger,
@@ -64,4 +83,5 @@ window.util = {
   onError,
   onSuccess,
   debounce,
+  loadImg,
 };

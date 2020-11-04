@@ -18,6 +18,7 @@ window.data.BUILD_TYPES = {
     price: 0,
   },
 };
+window.data.FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 
 window.data.CHECKINS = [`12:00`, `13:00`, `14:00`];
 window.data.CHECKOUTS = [`12:00`, `13:00`, `14:00`];
@@ -77,6 +78,8 @@ window.data.adFormFeatireInputs = window.data.addFormElement.querySelectorAll(`.
 window.data.mapFilterForm = document.querySelector(`.map__filters`);
 window.data.filterFeatireInputs = window.data.mapFilterForm.querySelectorAll(`#housing-features input`);
 window.data.adFormResetElement = document.querySelector(`.ad-form__reset`);
+window.data.avatarImg = document.querySelector(`.ad-form-header__preview img`);
+window.data.adFormPhotoElement = document.querySelector(`.ad-form__photo`);
 
 window.data.maxX = window.data.mapElement.clientWidth;
 
