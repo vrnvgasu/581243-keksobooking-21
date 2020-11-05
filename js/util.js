@@ -58,9 +58,7 @@ let loadImg = (inputElement, previewImg) => {
   let file = inputElement.files[0];
   let fileName = file.name.toLowerCase();
 
-  let matches = window.data.FILE_TYPES.some((ending) => {
-    return fileName.endsWith(ending);
-  });
+  let matches = window.data.FILE_TYPES.some((ending) => fileName.endsWith(ending));
 
   if (matches) {
     let reader = new FileReader();

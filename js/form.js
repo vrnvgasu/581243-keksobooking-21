@@ -35,7 +35,7 @@ let selectTimeHandler = (value) => {
   window.data.timeinSelect.value = window.data.timeoutSelect.value = value;
 };
 
-let roomHandler = (select) => {
+let addRoomHandlers = (select) => {
   let capacityValue = Number(window.data.capacitySelect.value);
   let roomValue = Number(select.value);
 
@@ -57,7 +57,7 @@ let setValidityMessage = (select, capacityValue, roomValue) => {
   select.reportValidity();
 };
 
-let capacityHandler = (select) => {
+let addCapacityHandlers = (select) => {
   let roomValue = Number(window.data.roomNumberSelect.value);
   let capacityValue = Number(select.value);
 
@@ -73,7 +73,7 @@ let onFormInput = (evt) => {
   }
 };
 
-let setBuildPreviewImg = (input) => {
+let setFormPreviewImg = (input) => {
   let previewImg = document.createElement(`img`);
   previewImg.style.width = `100%`;
   previewImg.style.height = `100%`;
@@ -88,13 +88,13 @@ let onFormChange = (evt) => {
   } else if (evt.target.matches(`#timein`) || evt.target.matches(`#timeout`)) {
     selectTimeHandler(evt.target.value);
   } else if (evt.target.matches(`#room_number`)) {
-    roomHandler(evt.target);
+    addRoomHandlers(evt.target);
   } else if (evt.target.matches(`#capacity`)) {
-    capacityHandler(evt.target);
+    addCapacityHandlers(evt.target);
   } else if (evt.target.matches(`#avatar`)) {
     window.util.loadImg(evt.target, window.data.avatarImg);
   } else if (evt.target.matches(`#images`)) {
-    setBuildPreviewImg(evt.target);
+    setFormPreviewImg(evt.target);
   }
 };
 
@@ -132,7 +132,7 @@ let onAddFormSubmit = (evt) => {
 
 let onAdFormResetElementClick = (evt) => {
   evt.preventDefault();
-  clearForm();
+  window.map.blockInterface();
 };
 
 let addFormHandlers = () => {

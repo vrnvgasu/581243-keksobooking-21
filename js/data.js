@@ -19,7 +19,6 @@ window.data.BUILD_TYPES = {
   },
 };
 window.data.FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
-
 window.data.CHECKINS = [`12:00`, `13:00`, `14:00`];
 window.data.CHECKOUTS = [`12:00`, `13:00`, `14:00`];
 window.data.FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
@@ -35,8 +34,6 @@ window.data.MIN_ROOMS = 1;
 window.data.MAX_ROOMS = 3;
 window.data.MAX_PRICE = 1000000;
 window.data.MAX_ADVERTS_COUNT = 5;
-
-window.data.adverts = [];
 window.data.DEBOUNCE_INTERVAL = 500; // ms
 
 /**
@@ -52,6 +49,8 @@ window.data.MAP_PIN_WIDTH = 64;
 window.data.MAP_PIN_HEIGHT = 70;
 window.data.PIN_WIDTH = 50;
 window.data.PIN_HEIGHT = 70;
+
+window.data.adverts = [];
 
 window.data.mapFiltersContainer = document.querySelector(`.map__filters-container`);
 window.data.mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -86,7 +85,7 @@ window.data.maxX = window.data.mapElement.clientWidth;
 /**
    * Filters
    */
-window.data.filters = {};
+window.data.filters = [];
 window.data.filterTypes = {
   type: {
     name: `housing-type`,
@@ -124,3 +123,9 @@ window.data.filterTypes = {
    */
 window.data.loadUrl = `https://21.javascript.pages.academy/keksobooking/data`;
 window.data.uploadUrl = `https://21.javascript.pages.academy/keksobooking`;
+window.data.StatusCode = {
+  OK: 200,
+  NOT_FOUND: 404,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+};

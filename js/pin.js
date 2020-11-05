@@ -11,9 +11,6 @@ let createPin = (advert, i) => {
   let img = pin.getElementsByTagName(`img`)[0];
   img.src = advert.author.avatar;
   img.alt = advert.offer.title;
-  /**
-     * Координаты меток находятся в остром конце
-     */
   pin.style.left = `${advert.location.x - window.data.PIN_WIDTH / 2}px`;
   pin.style.top = `${advert.location.y - window.data.PIN_HEIGHT}px`;
   pin.dataset.adverPosition = i;
