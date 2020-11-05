@@ -14,6 +14,7 @@ let addAdvertsToMap = () => {
 };
 
 let blockInterface = () => {
+  setMapPinElementPosition(window.data.MAIN_PIT_TOP, window.data.MAIN_PIT_LEFT);
   window.util.setReadonlyAtrToElement(window.data.addressInput);
   window.map.setStartAddress();
   window.util.setDisabledAtrToElements(window.data.fieldsetElements);
@@ -32,6 +33,11 @@ let blockInterface = () => {
   }
 
   interfaceActiveStatus = false;
+};
+
+let setMapPinElementPosition = (top, left) => {
+  window.data.mapPinElement.style.top = top + `px`;
+  window.data.mapPinElement.style.left = left + `px`;
 };
 
 let activateInterface = () => {
@@ -132,4 +138,5 @@ window.map = {
   blockInterface,
   clearMapHandlers,
   setAddress,
+  setMapPinElementPosition,
 };

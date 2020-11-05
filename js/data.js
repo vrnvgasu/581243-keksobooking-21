@@ -35,6 +35,8 @@ window.data.MAX_ROOMS = 3;
 window.data.MAX_PRICE = 1000000;
 window.data.MAX_ADVERTS_COUNT = 5;
 window.data.DEBOUNCE_INTERVAL = 500; // ms
+window.data.MAIN_PIT_TOP = 375;
+window.data.MAIN_PIT_LEFT = 570;
 
 /**
    * Валидация

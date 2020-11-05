@@ -36,8 +36,7 @@ let onMapPinElementMousedown = (evt) => {
 
     window.map.setAddress(left + (window.data.MAP_PIN_WIDTH / 2), top + window.data.MAP_PIN_HEIGHT);
 
-    window.data.mapPinElement.style.top = top + `px`;
-    window.data.mapPinElement.style.left = left + `px`;
+    window.map.setMapPinElementPosition(top, left);
 
   };
 
