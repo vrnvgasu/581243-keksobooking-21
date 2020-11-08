@@ -1,12 +1,13 @@
 'use strict';
+const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
 let successElement;
 
 let addSuccessElement = () => {
   if (!successElement) {
-    successElement = window.data.successTemplate.cloneNode(true);
+    successElement = successTemplate.cloneNode(true);
   }
 
-  window.data.mapElement.insertAdjacentElement(`beforebegin`, successElement);
+  window.map.mapElement.insertAdjacentElement(`beforebegin`, successElement);
 };
 
 let deleteSuccessElement = () => {

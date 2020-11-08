@@ -2,11 +2,10 @@ const path = require(`path`);
 
 module.exports = {
   entry: [
-   `./js/data.js`,
    `./js/util.js`,
    `./js/load.js`,
    `./js/card.js`,
-   `./js/adverts.js`,
+   `./js/advert.js`,
    `./js/pin.js`,
    `./js/map.js`,
    `./js/form.js`,

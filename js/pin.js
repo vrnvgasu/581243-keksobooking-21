@@ -1,18 +1,22 @@
 'use strict';
+const PIN_WIDTH = 50;
+const PIN_HEIGHT = 70;
+const mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+
 let deletePins = () => {
-  let pins = window.data.mapElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+  let pins = window.map.mapElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
   pins.forEach((pin) => {
     pin.remove();
   });
 };
 
 let createPin = (advert, i) => {
-  let pin = window.data.mapPinTemplate.cloneNode(true);
-  let img = pin.getElementsByTagName(`img`)[0];
+  let pin = mapPinTemplate.cloneNode(true);
+  let img = pin.querySelector(`img`);
   img.src = advert.author.avatar;
   img.alt = advert.offer.title;
-  pin.style.left = `${advert.location.x - window.data.PIN_WIDTH / 2}px`;
-  pin.style.top = `${advert.location.y - window.data.PIN_HEIGHT}px`;
+  pin.style.left = `${advert.location.x - PIN_WIDTH / 2}px`;
+  pin.style.top = `${advert.location.y - PIN_HEIGHT}px`;
   pin.dataset.adverPosition = i;
 
   return pin;

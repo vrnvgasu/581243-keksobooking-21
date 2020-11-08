@@ -6,12 +6,13 @@ const downloadErrorStyle = {
   position: `absolute`,
   width: `100%`,
 };
-const errorMessageElement = window.data.errorTemplate.querySelector(`.error__button`);
+const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+const errorMessageElement = errorTemplate.querySelector(`.error__button`);
 let errorElement;
 
 const addUploadError = (message) => {
   deleteErrorElement();
-  errorElement = window.data.errorTemplate.cloneNode(true);
+  errorElement = errorTemplate.cloneNode(true);
   errorMessageElement.textContent = message;
   setError();
   window.map.blockInterface();
@@ -33,7 +34,7 @@ let onErrorButtonClick = () => {
 };
 
 let setError = () => {
-  window.data.mapElement.insertAdjacentElement(`beforebegin`, errorElement);
+  window.map.mapElement.insertAdjacentElement(`beforebegin`, errorElement);
   errorElement.addEventListener(`click`, onErrorButtonClick);
 };
 

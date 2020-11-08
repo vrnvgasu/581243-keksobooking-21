@@ -1,4 +1,8 @@
 'use strict';
+const MIN_Y = 130;
+const MAX_Y = 630;
+const maxX = window.map.mapElement.clientWidth;
+
 let onMapPinElementMousedown = (evt) => {
   evt.preventDefault();
 
@@ -20,21 +24,21 @@ let onMapPinElementMousedown = (evt) => {
       y: moveEvt.pageY
     };
 
-    let top = window.data.mapPinElement.offsetTop - shift.y;
-    let left = window.data.mapPinElement.offsetLeft - shift.x;
+    let top = window.map.mapPinElement.offsetTop - shift.y;
+    let left = window.map.mapPinElement.offsetLeft - shift.x;
 
-    if (top < window.data.MIN_Y - window.data.MAP_PIN_HEIGHT) {
-      top = window.data.MIN_Y - window.data.MAP_PIN_HEIGHT;
-    } else if (top > window.data.MAX_Y - window.data.MAP_PIN_HEIGHT) {
-      top = window.data.MAX_Y - window.data.MAP_PIN_HEIGHT;
+    if (top < MIN_Y - window.map.MAP_PIN_HEIGHT) {
+      top = MIN_Y - window.map.MAP_PIN_HEIGHT;
+    } else if (top > MAX_Y - window.map.MAP_PIN_HEIGHT) {
+      top = MAX_Y - window.map.MAP_PIN_HEIGHT;
     }
-    if (left < 0 - (window.data.MAP_PIN_WIDTH / 2)) {
-      left = -window.data.MAP_PIN_WIDTH / 2;
-    } else if (left > window.data.maxX - (window.data.MAP_PIN_WIDTH / 2)) {
-      left = window.data.maxX - (window.data.MAP_PIN_WIDTH / 2);
+    if (left < 0 - (window.map.MAP_PIN_WIDTH / 2)) {
+      left = -window.map.MAP_PIN_WIDTH / 2;
+    } else if (left > maxX - (window.map.MAP_PIN_WIDTH / 2)) {
+      left = maxX - (window.map.MAP_PIN_WIDTH / 2);
     }
 
-    window.map.setAddress(left + (window.data.MAP_PIN_WIDTH / 2), top + window.data.MAP_PIN_HEIGHT);
+    window.map.setAddress(left + (window.map.MAP_PIN_WIDTH / 2), top + window.map.MAP_PIN_HEIGHT);
 
     window.map.setMapPinElementPosition(top, left);
 
@@ -52,11 +56,11 @@ let onMapPinElementMousedown = (evt) => {
 };
 
 let setMoveHandlers = () => {
-  window.data.mapPinElement.addEventListener(`mousedown`, onMapPinElementMousedown);
+  window.map.mapPinElement.addEventListener(`mousedown`, onMapPinElementMousedown);
 };
 
 let deleteMoveHandlers = () => {
-  window.data.mapPinElement.removeEventListener(`mousedown`, onMapPinElementMousedown);
+  window.map.mapPinElement.removeEventListener(`mousedown`, onMapPinElementMousedown);
 };
 
 window.move = {

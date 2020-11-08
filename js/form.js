@@ -1,10 +1,26 @@
 'use strict';
+const MIN_TITLE_LENGTH = 30;
+const MAX_TITLE_LENGTH = 100;
+const UPLOAD_URL = `https://21.javascript.pages.academy/keksobooking`;
+const priceInput = document.querySelector(`#price`);
+const timeinSelect = document.querySelector(`#timein`);
+const timeoutSelect = document.querySelector(`#timeout`);
+const roomNumberSelect = document.querySelector(`#room_number`);
+const capacitySelect = document.querySelector(`#capacity`);
+const typeInput = document.querySelector(`#type`);
+const addFormElement = document.querySelector(`.ad-form`);
+const headerPreviewImgElement = addFormElement.querySelector(`.ad-form-header__preview img`);
+const adFormPhotoElement = addFormElement.querySelector(`.ad-form__photo`);
+const adFormFeatureInputs = addFormElement.querySelectorAll(`.ad-form__element--wide input`);
+const adFormResetElement = document.querySelector(`.ad-form__reset`);
+const avatarImg = document.querySelector(`.ad-form-header__preview img`);
+
 let validateFormPrice = (input) => {
   let price = input.value;
-  let type = window.data.typeInput.value;
+  let type = typeInput.value;
 
   if (price < Number(input.placeholder)) {
-    input.setCustomValidity(`Минимальная цена для этого типа жилья ` + window.data.BUILD_TYPES[type].price);
+    input.setCustomValidity(`Минимальная цена для этого типа жилья ` + window.card.BUILD_TYPES[type].price);
   } else {
     input.setCustomValidity(``);
   }
@@ -15,10 +31,10 @@ let validateFormPrice = (input) => {
 let validateFormTitle = (input) => {
   let valueLength = input.value.length;
 
-  if (valueLength < window.data.MIN_TITLE_LENGTH) {
-    input.setCustomValidity(`Ещё ` + (window.data.MIN_TITLE_LENGTH - valueLength) + ` симв.`);
-  } else if (valueLength > window.data.MAX_TITLE_LENGTH) {
-    input.setCustomValidity(`Удалите лишние ` + (valueLength - window.data.MAX_TITLE_LENGTH) + ` симв.`);
+  if (valueLength < MIN_TITLE_LENGTH) {
+    input.setCustomValidity(`Ещё ` + (MIN_TITLE_LENGTH - valueLength) + ` симв.`);
+  } else if (valueLength > MAX_TITLE_LENGTH) {
+    input.setCustomValidity(`Удалите лишние ` + (valueLength - MAX_TITLE_LENGTH) + ` симв.`);
   } else {
     input.setCustomValidity(``);
   }
@@ -27,21 +43,21 @@ let validateFormTitle = (input) => {
 };
 
 let selectTypeHandler = (target) => {
-  window.data.priceInput.placeholder = window.data.BUILD_TYPES[target.value].price;
-  window.data.priceInput.min = window.data.BUILD_TYPES[target.value].price;
-  validateFormPrice(window.data.priceInput);
+  priceInput.placeholder = window.card.BUILD_TYPES[target.value].price;
+  priceInput.min = window.card.BUILD_TYPES[target.value].price;
+  validateFormPrice(priceInput);
 };
 
 let selectTimeHandler = (value) => {
-  window.data.timeinSelect.value = window.data.timeoutSelect.value = value;
+  timeinSelect.value = timeoutSelect.value = value;
 };
 
 let addRoomHandlers = (select) => {
-  let capacityValue = Number(window.data.capacitySelect.value);
+  let capacityValue = Number(capacitySelect.value);
   let roomValue = Number(select.value);
 
   setValidityMessage(select, capacityValue, roomValue);
-  setValidityMessage(window.data.capacitySelect, capacityValue, roomValue);
+  setValidityMessage(capacitySelect, capacityValue, roomValue);
 };
 
 let setValidityMessage = (select, capacityValue, roomValue) => {
@@ -59,11 +75,11 @@ let setValidityMessage = (select, capacityValue, roomValue) => {
 };
 
 let addCapacityHandlers = (select) => {
-  let roomValue = Number(window.data.roomNumberSelect.value);
+  let roomValue = Number(roomNumberSelect.value);
   let capacityValue = Number(select.value);
 
   setValidityMessage(select, capacityValue, roomValue);
-  setValidityMessage(window.data.roomNumberSelect, capacityValue, roomValue);
+  setValidityMessage(roomNumberSelect, capacityValue, roomValue);
 };
 
 let onFormInput = (evt) => {
@@ -79,8 +95,8 @@ let setFormPreviewImg = (input) => {
   previewImg.style.width = `100%`;
   previewImg.style.height = `100%`;
   window.util.loadImg(input, previewImg);
-  window.data.adFormPhotoElement.textContent = ``;
-  window.data.adFormPhotoElement.append(previewImg);
+  adFormPhotoElement.textContent = ``;
+  adFormPhotoElement.append(previewImg);
 };
 
 let onFormChange = (evt) => {
@@ -93,28 +109,28 @@ let onFormChange = (evt) => {
   } else if (evt.target.matches(`#capacity`)) {
     addCapacityHandlers(evt.target);
   } else if (evt.target.matches(`#avatar`)) {
-    window.util.loadImg(evt.target, window.data.avatarImg);
+    window.util.loadImg(evt.target, avatarImg);
   } else if (evt.target.matches(`#images`)) {
     setFormPreviewImg(evt.target);
   }
 };
 
 let clearForm = () => {
-  window.data.addFormElement.querySelector(`#title`).value = ``;
-  window.data.addFormElement.querySelector(`#price`).value = ``;
-  window.data.addFormElement.querySelector(`#price`).placeholder = `1000`;
-  window.data.addFormElement.querySelector(`#description`).value = ``;
-  window.data.addFormElement.querySelector(`#type`).value = `flat`;
-  window.data.addFormElement.querySelector(`#timein`).value = `12:00`;
-  window.data.addFormElement.querySelector(`#timeout`).value = `12:00`;
-  window.data.addFormElement.querySelector(`#room_number`).value = `1`;
-  window.data.addFormElement.querySelector(`#capacity`).value = `1`;
-  window.data.addFormElement.querySelector(`#images`).value = ``;
-  window.data.addFormElement.querySelector(`#avatar`).value = ``;
-  window.data.headerPreviewImgElement.src = `img/muffin-grey.svg`;
-  window.data.adFormPhotoElement.textContent = ``;
+  addFormElement.querySelector(`#title`).value = ``;
+  addFormElement.querySelector(`#price`).value = ``;
+  addFormElement.querySelector(`#price`).placeholder = `1000`;
+  addFormElement.querySelector(`#description`).value = ``;
+  addFormElement.querySelector(`#type`).value = `flat`;
+  addFormElement.querySelector(`#timein`).value = `12:00`;
+  addFormElement.querySelector(`#timeout`).value = `12:00`;
+  addFormElement.querySelector(`#room_number`).value = `1`;
+  addFormElement.querySelector(`#capacity`).value = `1`;
+  addFormElement.querySelector(`#images`).value = ``;
+  addFormElement.querySelector(`#avatar`).value = ``;
+  headerPreviewImgElement.src = `img/muffin-grey.svg`;
+  adFormPhotoElement.textContent = ``;
 
-  Array.from(window.data.adFormFeatireInputs).forEach((featureInput) => {
+  Array.from(adFormFeatureInputs).forEach((featureInput) => {
     featureInput.checked = false;
   });
 };
@@ -122,11 +138,11 @@ let clearForm = () => {
 let onAddFormSubmit = (evt) => {
   evt.preventDefault();
   window.load(
-      window.data.uploadUrl,
+      UPLOAD_URL,
       window.util.onSuccess,
       window.error.addUploadError,
       `POST`,
-      new FormData(window.data.addFormElement)
+      new FormData(addFormElement)
   );
 };
 
@@ -136,13 +152,14 @@ let onAdFormResetElementClick = (evt) => {
 };
 
 let addFormHandlers = () => {
-  window.data.addFormElement.addEventListener(`input`, onFormInput);
-  window.data.addFormElement.addEventListener(`change`, onFormChange);
-  window.data.addFormElement.addEventListener(`submit`, onAddFormSubmit);
-  window.data.adFormResetElement.addEventListener(`click`, onAdFormResetElementClick);
+  addFormElement.addEventListener(`input`, onFormInput);
+  addFormElement.addEventListener(`change`, onFormChange);
+  addFormElement.addEventListener(`submit`, onAddFormSubmit);
+  adFormResetElement.addEventListener(`click`, onAdFormResetElementClick);
 };
 
 window.form = {
+  addFormElement,
   addFormHandlers,
   clearForm,
 };
