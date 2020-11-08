@@ -1,30 +1,19 @@
 'use strict';
-const downloadErrorStyle = {
-  zIndex: 100,
-  backgroundColor: `red`,
-  textAlign: `center`,
-  position: `absolute`,
-  width: `100%`,
-};
-const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
-const errorMessageElement = errorTemplate.querySelector(`.error__button`);
+const errorUploadTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+const errorDownloadTemplate = document.querySelector(`#load_error`).content.querySelector(`.load_error`);
+const errorMessageElement = errorUploadTemplate.querySelector(`.error__button`);
 let errorElement;
 
 const addUploadError = (message) => {
   deleteErrorElement();
-  errorElement = errorTemplate.cloneNode(true);
+  errorElement = errorUploadTemplate.cloneNode(true);
   errorMessageElement.textContent = message;
   setError();
   window.map.blockInterface();
 };
 const addDownloadError = (message) => {
   deleteErrorElement();
-  errorElement = document.createElement(`div`);
-  errorElement.style.zIndex = downloadErrorStyle.zIndex;
-  errorElement.style.backgroundColor = downloadErrorStyle.backgroundColor;
-  errorElement.style.textAlign = downloadErrorStyle.textAlign;
-  errorElement.style.position = downloadErrorStyle.position;
-  errorElement.style.width = downloadErrorStyle.width;
+  errorElement = errorDownloadTemplate.cloneNode(true);
   errorElement.textContent = message;
   setError();
 };

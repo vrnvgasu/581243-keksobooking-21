@@ -25,10 +25,9 @@ let addAdvertsToMap = () => {
 
 let blockInterface = () => {
   setMapPinElementPosition(MAIN_PIT_TOP, MAIN_PIT_LEFT);
-  window.util.setReadonlyAtrToElement(addressInput);
   window.map.setStartAddress();
-  window.util.setDisabledAtrToElements(fieldsetElements);
-  window.util.setDisabledAtrToElements(mapFilterElements);
+  window.util.toggleDisabledOnFormNodes(fieldsetElements, true);
+  window.util.toggleDisabledOnFormNodes(mapFilterElements, true);
 
   if (interfaceActiveStatus) {
     window.pin.deletePins();
@@ -53,8 +52,8 @@ let setMapPinElementPosition = (top, left) => {
 let activateInterface = () => {
   interfaceActiveStatus = true;
   setAddressForActiveMap();
-  window.util.deleteDisabledAtrFromElements(fieldsetElements);
-  window.util.deleteDisabledAtrFromElements(mapFilterElements);
+  window.util.toggleDisabledOnFormNodes(fieldsetElements, false);
+  window.util.toggleDisabledOnFormNodes(mapFilterElements, false);
   mainMapElement.classList.remove(`map--faded`);
   window.form.addFormElement.classList.remove(`ad-form--disabled`);
 

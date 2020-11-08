@@ -2,20 +2,10 @@
 const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 const DEBOUNCE_INTERVAL = 500; // ms
 
-let deleteDisabledAtrFromElements = (elements) => {
+let toggleDisabledOnFormNodes = (elements, disabled) => {
   Array.from(elements).forEach((element) => {
-    element.disabled = false;
+    element.disabled = disabled;
   });
-};
-
-let setDisabledAtrToElements = (elements) => {
-  Array.from(elements).forEach((element) => {
-    element.disabled = true;
-  });
-};
-
-let setReadonlyAtrToElement = (element) => {
-  element.readonly = true;
 };
 
 let onSuccess = () => {
@@ -54,9 +44,7 @@ let loadImg = (inputElement, previewImg) => {
 };
 
 window.util = {
-  deleteDisabledAtrFromElements,
-  setDisabledAtrToElements,
-  setReadonlyAtrToElement,
+  toggleDisabledOnFormNodes,
   onSuccess,
   debounce,
   loadImg,
