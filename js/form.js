@@ -128,6 +128,7 @@ const onFormChange = (evt) => {
 const clear = () => {
   addFormElement.reset();
   priceInput.placeholder = defaultValues.price;
+  priceInput.min = defaultValues.price;
   typeInput.value = defaultValues.type;
   timeinSelect.value = defaultValues.timein;
   timeoutSelect.value = defaultValues.timeout;
@@ -135,6 +136,11 @@ const clear = () => {
   capacitySelect.value = defaultValues.capacity;
   headerPreviewImgElement.src = defaultValues.previewAvatar;
   adFormPhotoElement.textContent = ``;
+
+  validatePrice(priceInput);
+  validateTitle(addFormElement.title);
+  setValidityMessage(roomNumberSelect, capacitySelect.value, roomNumberSelect.value);
+  setValidityMessage(capacitySelect, capacitySelect.value, roomNumberSelect.value);
 };
 
 const onAddFormSubmit = (evt) => {
