@@ -12,20 +12,20 @@ const mainMapElement = document.querySelector(`.map`);
 let interfaceActiveStatus = false;
 let adverts = [];
 
-let addAdvertsToMap = () => {
+const addAdvertsToMap = () => {
   adverts = window.advert.loadedAdverts.slice();
   adverts = window.advert.filterAdverts(adverts);
 
   adverts = adverts.slice(0, 5);
-  let fragment = window.pin.createPins(adverts);
+  const fragment = window.pin.createPins(adverts);
   mapElement.appendChild(fragment);
 
   addPinHandlers();
 };
 
-let blockInterface = () => {
+const blockInterface = () => {
   setMapPinElementPosition(MAIN_PIT_TOP, MAIN_PIT_LEFT);
-  window.map.setStartAddress();
+  setStartAddress();
   window.util.toggleDisabledOnFormNodes(fieldsetElements, true);
   window.util.toggleDisabledOnFormNodes(mapFilterElements, true);
 
@@ -44,12 +44,12 @@ let blockInterface = () => {
   addMapPinHandlers();
 };
 
-let setMapPinElementPosition = (top, left) => {
+const setMapPinElementPosition = (top, left) => {
   mapPinElement.style.top = top + `px`;
   mapPinElement.style.left = left + `px`;
 };
 
-let activateInterface = () => {
+const activateInterface = () => {
   interfaceActiveStatus = true;
   setAddressForActiveMap();
   window.util.toggleDisabledOnFormNodes(fieldsetElements, false);
@@ -67,7 +67,7 @@ let activateInterface = () => {
   mapPinElement.removeEventListener(`mousedown`, onMapPinMousedown);
 };
 
-let setAddress = (x, y) => {
+const setAddress = (x, y) => {
   addressInput.value = `${x}, ${y}`;
 };
 
@@ -80,7 +80,7 @@ let onMapPinMousedown = (evt) => {
   activateInterface();
 };
 
-let onMapPinKeydown = (evt) => {
+const onMapPinKeydown = (evt) => {
   evt.preventDefault();
   if (evt.keyCode !== 13) {
     return;
@@ -89,42 +89,41 @@ let onMapPinKeydown = (evt) => {
   activateInterface();
 };
 
-let addMapPinHandlers = () => {
+const addMapPinHandlers = () => {
   mapPinElement.addEventListener(`mousedown`, onMapPinMousedown);
   mapPinElement.addEventListener(`keydown`, onMapPinKeydown);
 };
 
-let setStartAddress = () => {
-  let y = mapPinElement.offsetTop + MAP_PIN_HEIGHT / 2;
-  let x = mapPinElement.offsetLeft + MAP_PIN_WIDTH / 2;
-
+const setStartAddress = () => {
+  const y = mapPinElement.offsetTop + MAP_PIN_HEIGHT / 2;
+  const x = mapPinElement.offsetLeft + MAP_PIN_WIDTH / 2;
   setAddress(x, y);
 };
 
-let setAddressForActiveMap = () => {
-  let y = mapPinElement.offsetTop;
-  let x = mapPinElement.offsetLeft;
+const setAddressForActiveMap = () => {
+  const y = mapPinElement.offsetTop;
+  const x = mapPinElement.offsetLeft;
   setAddress(x + (MAP_PIN_WIDTH / 2), y + MAP_PIN_HEIGHT);
 };
 
-let onPinClick = (evt) => {
-  let pinButton = evt.target.closest(`button`);
+const onPinClick = (evt) => {
+  const pinButton = evt.target.closest(`button`);
 
   if (!pinButton) {
     return;
   }
 
   if (pinButton.classList.contains(`map__pin`) && !pinButton.classList.contains(`map__pin--main`)) {
-    let advert = adverts[pinButton.dataset.adverPosition];
+    const advert = adverts[pinButton.dataset.adverPosition];
     window.card.addCartElementToDOM(advert);
   }
 };
 
-let addPinHandlers = () => {
+const addPinHandlers = () => {
   document.addEventListener(`click`, onPinClick);
 };
 
-let clearMapHandlers = () => {
+const clearMapHandlers = () => {
   document.addEventListener(`keydown`, (evt) => {
     if (evt.keyCode === 27) {
       window.card.deleteCardElements();
@@ -146,10 +145,7 @@ window.map = {
   mapPinElement,
   mainMapElement,
   addMapPinHandlers,
-  setStartAddress,
-  addPinHandlers,
   addAdvertsToMap,
-  activateInterface,
   blockInterface,
   clearMapHandlers,
   setAddress,

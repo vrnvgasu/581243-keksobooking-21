@@ -11,6 +11,7 @@ const addUploadError = (message) => {
   setError();
   window.map.blockInterface();
 };
+
 const addDownloadError = (message) => {
   deleteErrorElement();
   errorElement = errorDownloadTemplate.cloneNode(true);
@@ -18,16 +19,16 @@ const addDownloadError = (message) => {
   setError();
 };
 
-let onErrorButtonClick = () => {
+const onErrorButtonClick = () => {
   deleteErrorElement();
 };
 
-let setError = () => {
+const setError = () => {
   window.map.mapElement.insertAdjacentElement(`beforebegin`, errorElement);
   errorElement.addEventListener(`click`, onErrorButtonClick);
 };
 
-let deleteErrorElement = () => {
+const deleteErrorElement = () => {
   if (errorElement) {
     errorElement.remove();
   }

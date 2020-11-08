@@ -9,7 +9,7 @@ const StatusCode = {
 };
 
 window.load = (url, onSuccess, onError, method = `GET`, data) => {
-  let xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
 
   xhr.responseType = RESPONSE_TYPE;
 

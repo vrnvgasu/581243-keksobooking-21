@@ -21,7 +21,7 @@ const BUILD_TYPES = {
 const mapFiltersContainer = document.querySelector(`.map__filters-container`);
 const cardArticleTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 
-let hideElement = (element) => {
+const hideElement = (element) => {
   element.classList.add(HIDDEN_CLASS);
 };
 
@@ -31,22 +31,15 @@ let createCartElement = (advert) => {
   let featureList = template.querySelector(`.popup__features`);
   let photoItem = template.querySelector(`.popup__photo`);
   let photoList = template.querySelector(`.popup__photos`);
-  let title = template.querySelector(`.popup__title`);
-  let address = template.querySelector(`.popup__text--address`);
-  let price = template.querySelector(`.popup__text--price`);
-  let type = template.querySelector(`.popup__type`);
-  let capacity = template.querySelector(`.popup__text--capacity`);
-  let time = template.querySelector(`.popup__text--time`);
-  let description = template.querySelector(`.popup__description`);
   let avatar = template.querySelector(`.popup__avatar`);
 
-  title.textContent = advert.offer.title;
-  address.textContent = advert.offer.address;
-  price.textContent = `${advert.offer.price}₽/ночь`;
-  type.textContent = BUILD_TYPES[advert.offer.type].translation;
-  capacity.textContent = `${advert.offer.rooms} комната(ы) для ${advert.offer.guests} гостей`;
-  time.textContent = `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`;
-  description.textContent = advert.offer.description;
+  template.querySelector(`.popup__title`).textContent = advert.offer.title;
+  template.querySelector(`.popup__text--address`).textContent = advert.offer.address;
+  template.querySelector(`.popup__text--price`).textContent = `${advert.offer.price}₽/ночь`;
+  template.querySelector(`.popup__type`).textContent = BUILD_TYPES[advert.offer.type].translation;
+  template.querySelector(`.popup__text--capacity`).textContent = `${advert.offer.rooms} комната(ы) для ${advert.offer.guests} гостей`;
+  template.querySelector(`.popup__text--time`).textContent = `Заезд после ${advert.offer.checkin}, выезд до ${advert.offer.checkout}`;
+  template.querySelector(`.popup__description`).textContent = advert.offer.description;
   avatar.src = advert.author.avatar;
 
   featureList.textContent = ``;
@@ -73,12 +66,12 @@ let createCartElement = (advert) => {
   return template;
 };
 
-let onPopupCloseClick = () => {
+const onPopupCloseClick = () => {
   deleteCardElements();
 };
 
-let deleteCardElements = () => {
-  let card = window.map.mainMapElement.querySelector(`.map__card`);
+const deleteCardElements = () => {
+  const card = window.map.mainMapElement.querySelector(`.map__card`);
   if (card) {
     card.remove();
   }
@@ -86,10 +79,10 @@ let deleteCardElements = () => {
 
 let addCartElementToDOM = (advert) => {
   deleteCardElements();
-  let card = createCartElement(advert);
+  const card = createCartElement(advert);
   mapFiltersContainer.insertAdjacentElement(`beforebegin`, card);
 
-  let popupCloseElement = card.querySelector(`.popup__close`);
+  const popupCloseElement = card.querySelector(`.popup__close`);
   popupCloseElement.addEventListener(`click`, onPopupCloseClick);
 };
 

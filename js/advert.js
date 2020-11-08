@@ -32,7 +32,7 @@ const filterTypes = {
 };
 let loadedAdverts = [];
 
-let filterAdverts = (adverts) => {
+const filterAdverts = (adverts) => {
   if (Object.keys(window.filter.filters).length === 0) {
     return adverts;
   }
@@ -88,12 +88,12 @@ let filterAdverts = (adverts) => {
   });
 };
 
-let prepareAdverts = (adverts) => {
+const prepareAdverts = (adverts) => {
   window.advert.loadedAdverts = adverts.filter((advert) => advert.offer);
   window.map.addAdvertsToMap();
 };
 
-let generateAdverts = () => {
+const generateAdverts = () => {
   window.load(LOAD_URL, prepareAdverts, window.error.addDownloadError);
 };
 

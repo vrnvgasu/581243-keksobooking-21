@@ -2,18 +2,18 @@
 const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 const DEBOUNCE_INTERVAL = 500; // ms
 
-let toggleDisabledOnFormNodes = (elements, disabled) => {
+const toggleDisabledOnFormNodes = (elements, disabled) => {
   Array.from(elements).forEach((element) => {
     element.disabled = disabled;
   });
 };
 
-let onSuccess = () => {
+const onSuccess = () => {
   window.map.blockInterface();
   window.success.addSuccessElement();
 };
 
-let debounce = (cb) => {
+const debounce = (cb) => {
   let lastTimeout = null;
 
   return (...parameters) => {
@@ -26,14 +26,14 @@ let debounce = (cb) => {
   };
 };
 
-let loadImg = (inputElement, previewImg) => {
-  let file = inputElement.files[0];
-  let fileName = file.name.toLowerCase();
+const loadImg = (inputElement, previewImg) => {
+  const file = inputElement.files[0];
+  const fileName = file.name.toLowerCase();
 
-  let matches = FILE_TYPES.some((ending) => fileName.endsWith(ending));
+  const matches = FILE_TYPES.some((ending) => fileName.endsWith(ending));
 
   if (matches) {
-    let reader = new FileReader();
+    const reader = new FileReader();
 
     reader.addEventListener(`load`, () => {
       previewImg.src = reader.result;

@@ -1,33 +1,27 @@
 'use strict';
 const mapFilterForm = document.querySelector(`.map__filters`);
-const filterFeatureInputs = mapFilterForm.querySelectorAll(`#housing-features input`);
+const ANY = `any`;
+const FEATURES = `features`;
 let filters = [];
 
-let clearFilter = () => {
-  mapFilterForm.querySelector(`#housing-type`).value = `any`;
-  mapFilterForm.querySelector(`#housing-price`).value = `any`;
-  mapFilterForm.querySelector(`#housing-rooms`).value = `any`;
-  mapFilterForm.querySelector(`#housing-guests`).value = `any`;
+const clearFilter = () => {
+  mapFilterForm.reset();
   window.filter.filters = [];
-
-  Array.from(filterFeatureInputs).forEach((featureInput) => {
-    featureInput.checked = false;
-  });
 };
 
-let changeFilters = () => {
+const changeFilters = () => {
   filters = [];
   let data = new FormData(mapFilterForm);
   data = data.entries();
   let obj = data.next();
 
   while (undefined !== obj.value) {
-    if (obj.value[1] === `any`) {
+    if (obj.value[1] === ANY) {
       obj = data.next();
       continue;
     }
 
-    if (obj.value[0] === `features`) {
+    if (obj.value[0] === FEATURES) {
       if (!filters[obj.value[0]]) {
         filters[obj.value[0]] = [];
       }
@@ -46,12 +40,12 @@ let changeFilters = () => {
   window.map.addAdvertsToMap();
 };
 
-let onMapFilterFormChange = window.util.debounce((evt) => {
+const onMapFilterFormChange = window.util.debounce((evt) => {
   evt.preventDefault();
   changeFilters();
 });
 
-let setMapFilterFormHandlers = () => {
+const setMapFilterFormHandlers = () => {
   mapFilterForm.addEventListener(`change`, onMapFilterFormChange);
 };
 

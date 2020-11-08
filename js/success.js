@@ -2,7 +2,7 @@
 const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
 let successElement;
 
-let addSuccessElement = () => {
+const addSuccessElement = () => {
   if (!successElement) {
     successElement = successTemplate.cloneNode(true);
   }
@@ -10,7 +10,7 @@ let addSuccessElement = () => {
   window.map.mapElement.insertAdjacentElement(`beforebegin`, successElement);
 };
 
-let deleteSuccessElement = () => {
+const deleteSuccessElement = () => {
   if (successElement) {
     successElement.remove();
   }

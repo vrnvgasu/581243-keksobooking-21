@@ -1,7 +1,18 @@
 'use strict';
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+const CAPACITY_NO_GUESTS = 0;
+const ROOM_NO_GUESTS = 100;
 const UPLOAD_URL = `https://21.javascript.pages.academy/keksobooking`;
+const defaultFormValue = {
+  price: `1000`,
+  type: `flat`,
+  timein: `12:00`,
+  timeout: `12:00`,
+  roomNumber: `1`,
+  capacity: `1`,
+  previewAvatar: `img/muffin-grey.svg`,
+};
 const priceInput = document.querySelector(`#price`);
 const timeinSelect = document.querySelector(`#timein`);
 const timeoutSelect = document.querySelector(`#timeout`);
@@ -11,13 +22,12 @@ const typeInput = document.querySelector(`#type`);
 const addFormElement = document.querySelector(`.ad-form`);
 const headerPreviewImgElement = addFormElement.querySelector(`.ad-form-header__preview img`);
 const adFormPhotoElement = addFormElement.querySelector(`.ad-form__photo`);
-const adFormFeatureInputs = addFormElement.querySelectorAll(`.ad-form__element--wide input`);
 const adFormResetElement = document.querySelector(`.ad-form__reset`);
 const avatarImg = document.querySelector(`.ad-form-header__preview img`);
 
-let validateFormPrice = (input) => {
-  let price = input.value;
-  let type = typeInput.value;
+const validateFormPrice = (input) => {
+  const price = input.value;
+  const type = typeInput.value;
 
   if (price < Number(input.placeholder)) {
     input.setCustomValidity(`Минимальная цена для этого типа жилья ` + window.card.BUILD_TYPES[type].price);
@@ -28,8 +38,8 @@ let validateFormPrice = (input) => {
   input.reportValidity();
 };
 
-let validateFormTitle = (input) => {
-  let valueLength = input.value.length;
+const validateFormTitle = (input) => {
+  const valueLength = input.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
     input.setCustomValidity(`Ещё ` + (MIN_TITLE_LENGTH - valueLength) + ` симв.`);
@@ -42,30 +52,30 @@ let validateFormTitle = (input) => {
   input.reportValidity();
 };
 
-let selectTypeHandler = (target) => {
+const selectTypeHandler = (target) => {
   priceInput.placeholder = window.card.BUILD_TYPES[target.value].price;
   priceInput.min = window.card.BUILD_TYPES[target.value].price;
   validateFormPrice(priceInput);
 };
 
-let selectTimeHandler = (value) => {
+const selectTimeHandler = (value) => {
   timeinSelect.value = timeoutSelect.value = value;
 };
 
-let addRoomHandlers = (select) => {
-  let capacityValue = Number(capacitySelect.value);
-  let roomValue = Number(select.value);
+const addRoomHandlers = (select) => {
+  const capacityValue = Number(capacitySelect.value);
+  const roomValue = Number(select.value);
 
   setValidityMessage(select, capacityValue, roomValue);
   setValidityMessage(capacitySelect, capacityValue, roomValue);
 };
 
-let setValidityMessage = (select, capacityValue, roomValue) => {
-  if (capacityValue > 0 && capacityValue > roomValue && roomValue !== 100) {
+const setValidityMessage = (select, capacityValue, roomValue) => {
+  if (capacityValue > CAPACITY_NO_GUESTS && capacityValue > roomValue && roomValue !== ROOM_NO_GUESTS) {
     select.setCustomValidity(`Гостей (${capacityValue}) больше, чем комнат (${roomValue})`);
-  } else if (capacityValue === 0 && roomValue !== 100) {
+  } else if (capacityValue === CAPACITY_NO_GUESTS && roomValue !== ROOM_NO_GUESTS) {
     select.setCustomValidity(`Требуется 100 комнат.`);
-  } else if (capacityValue !== 0 && roomValue === 100) {
+  } else if (capacityValue !== CAPACITY_NO_GUESTS && roomValue === ROOM_NO_GUESTS) {
     select.setCustomValidity(`Аренда не для гостей`);
   } else {
     select.setCustomValidity(``);
@@ -74,9 +84,9 @@ let setValidityMessage = (select, capacityValue, roomValue) => {
   select.reportValidity();
 };
 
-let addCapacityHandlers = (select) => {
-  let roomValue = Number(roomNumberSelect.value);
-  let capacityValue = Number(select.value);
+const addCapacityHandlers = (select) => {
+  const roomValue = Number(roomNumberSelect.value);
+  const capacityValue = Number(select.value);
 
   setValidityMessage(select, capacityValue, roomValue);
   setValidityMessage(roomNumberSelect, capacityValue, roomValue);
@@ -90,8 +100,8 @@ let onFormInput = (evt) => {
   }
 };
 
-let setFormPreviewImg = (input) => {
-  let previewImg = document.createElement(`img`);
+const setFormPreviewImg = (input) => {
+  const previewImg = document.createElement(`img`);
   previewImg.style.width = `100%`;
   previewImg.style.height = `100%`;
   window.util.loadImg(input, previewImg);
@@ -99,7 +109,7 @@ let setFormPreviewImg = (input) => {
   adFormPhotoElement.append(previewImg);
 };
 
-let onFormChange = (evt) => {
+const onFormChange = (evt) => {
   if (evt.target.matches(`#type`)) {
     selectTypeHandler(evt.target);
   } else if (evt.target.matches(`#timein`) || evt.target.matches(`#timeout`)) {
@@ -115,27 +125,19 @@ let onFormChange = (evt) => {
   }
 };
 
-let clearForm = () => {
-  addFormElement.querySelector(`#title`).value = ``;
-  addFormElement.querySelector(`#price`).value = ``;
-  addFormElement.querySelector(`#price`).placeholder = `1000`;
-  addFormElement.querySelector(`#description`).value = ``;
-  addFormElement.querySelector(`#type`).value = `flat`;
-  addFormElement.querySelector(`#timein`).value = `12:00`;
-  addFormElement.querySelector(`#timeout`).value = `12:00`;
-  addFormElement.querySelector(`#room_number`).value = `1`;
-  addFormElement.querySelector(`#capacity`).value = `1`;
-  addFormElement.querySelector(`#images`).value = ``;
-  addFormElement.querySelector(`#avatar`).value = ``;
-  headerPreviewImgElement.src = `img/muffin-grey.svg`;
+const clearForm = () => {
+  addFormElement.reset();
+  priceInput.placeholder = defaultFormValue.price;
+  typeInput.value = defaultFormValue.type;
+  timeinSelect.value = defaultFormValue.timein;
+  timeoutSelect.value = defaultFormValue.timeout;
+  roomNumberSelect.value = defaultFormValue.roomNumber;
+  capacitySelect.value = defaultFormValue.capacity;
+  headerPreviewImgElement.src = defaultFormValue.previewAvatar;
   adFormPhotoElement.textContent = ``;
-
-  Array.from(adFormFeatureInputs).forEach((featureInput) => {
-    featureInput.checked = false;
-  });
 };
 
-let onAddFormSubmit = (evt) => {
+const onAddFormSubmit = (evt) => {
   evt.preventDefault();
   window.load(
       UPLOAD_URL,
@@ -146,12 +148,12 @@ let onAddFormSubmit = (evt) => {
   );
 };
 
-let onAdFormResetElementClick = (evt) => {
+const onAdFormResetElementClick = (evt) => {
   evt.preventDefault();
   window.map.blockInterface();
 };
 
-let addFormHandlers = () => {
+const addFormHandlers = () => {
   addFormElement.addEventListener(`input`, onFormInput);
   addFormElement.addEventListener(`change`, onFormChange);
   addFormElement.addEventListener(`submit`, onAddFormSubmit);

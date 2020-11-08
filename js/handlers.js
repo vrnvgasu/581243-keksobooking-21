@@ -1,5 +1,5 @@
 'use strict';
-let setHandlers = () => {
+const setHandlers = () => {
   window.form.addFormHandlers();
   window.map.addMapPinHandlers();
   window.map.clearMapHandlers();

@@ -3,7 +3,7 @@ const MIN_Y = 130;
 const MAX_Y = 630;
 const maxX = window.map.mapElement.clientWidth;
 
-let onMapPinElementMousedown = (evt) => {
+const onMapPinElementMousedown = (evt) => {
   evt.preventDefault();
 
   let startCoords = {
@@ -11,7 +11,7 @@ let onMapPinElementMousedown = (evt) => {
     y: evt.pageY
   };
 
-  let onMouseMove = (moveEvt) => {
+  const onMouseMove = (moveEvt) => {
     moveEvt.preventDefault();
 
     let shift = {
@@ -44,7 +44,7 @@ let onMapPinElementMousedown = (evt) => {
 
   };
 
-  let onMouseUp = (upEvt) => {
+  const onMouseUp = (upEvt) => {
     upEvt.preventDefault();
 
     document.removeEventListener(`mousemove`, onMouseMove);
@@ -55,15 +55,10 @@ let onMapPinElementMousedown = (evt) => {
   document.addEventListener(`mouseup`, onMouseUp);
 };
 
-let setMoveHandlers = () => {
+const setMoveHandlers = () => {
   window.map.mapPinElement.addEventListener(`mousedown`, onMapPinElementMousedown);
-};
-
-let deleteMoveHandlers = () => {
-  window.map.mapPinElement.removeEventListener(`mousedown`, onMapPinElementMousedown);
 };
 
 window.move = {
   setMoveHandlers,
-  deleteMoveHandlers,
 };
