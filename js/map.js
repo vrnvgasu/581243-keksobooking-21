@@ -20,14 +20,14 @@ const renderAdverts = () => {
   const fragment = window.pin.createElements(adverts);
   pinElement.appendChild(fragment);
 
-  addPinHandlers();
+  setPinHandlers();
 };
 
 const blockInterface = () => {
   setMapPinElementPosition(MAIN_PIN_TOP, MAIN_PIN_LEFT);
   setStartAddress();
-  window.util.toggleDisabledOnFormNodes(fieldsetElements, true);
-  window.util.toggleDisabledOnFormNodes(filterElements, true);
+  window.util.toggleDisabledElements(fieldsetElements, true);
+  window.util.toggleDisabledElements(filterElements, true);
 
   if (interfaceActiveStatus) {
     window.pin.deleteAll();
@@ -41,7 +41,7 @@ const blockInterface = () => {
   }
 
   interfaceActiveStatus = false;
-  addMapPinHandlers();
+  setHandlers();
 };
 
 const setMapPinElementPosition = (top, left) => {
@@ -52,8 +52,8 @@ const setMapPinElementPosition = (top, left) => {
 const activateInterface = () => {
   interfaceActiveStatus = true;
   setAddressForActiveMap();
-  window.util.toggleDisabledOnFormNodes(fieldsetElements, false);
-  window.util.toggleDisabledOnFormNodes(filterElements, false);
+  window.util.toggleDisabledElements(fieldsetElements, false);
+  window.util.toggleDisabledElements(filterElements, false);
   mainMapElement.classList.remove(`map--faded`);
   window.form.addFormElement.classList.remove(`ad-form--disabled`);
 
@@ -89,7 +89,7 @@ const onMapPinKeydown = (evt) => {
   activateInterface();
 };
 
-const addMapPinHandlers = () => {
+const setHandlers = () => {
   pinMainElement.addEventListener(`mousedown`, onMapPinMousedown);
   pinMainElement.addEventListener(`keydown`, onMapPinKeydown);
 };
@@ -119,11 +119,11 @@ const onPinClick = (evt) => {
   }
 };
 
-const addPinHandlers = () => {
+const setPinHandlers = () => {
   document.addEventListener(`click`, onPinClick);
 };
 
-const clearMapHandlers = () => {
+const setClearHandlers = () => {
   document.addEventListener(`keydown`, (evt) => {
     if (evt.keyCode === 27) {
       window.card.deleteElements();
@@ -144,10 +144,10 @@ window.map = {
   pinElement,
   pinMainElement,
   mainMapElement,
-  addMapPinHandlers,
+  setHandlers,
   renderAdverts,
   blockInterface,
-  clearMapHandlers,
+  setClearHandlers,
   setAddress,
   setMapPinElementPosition,
 };

@@ -1,7 +1,7 @@
 'use strict';
-const mapFilterForm = document.querySelector(`.map__filters`);
 const ANY = `any`;
 const FEATURES = `features`;
+const mapFilterForm = document.querySelector(`.map__filters`);
 let filters = [];
 
 const clear = () => {
@@ -45,12 +45,12 @@ const onMapFilterFormChange = window.util.debounce((evt) => {
   change();
 });
 
-const setMapFilterFormHandlers = () => {
+const setHandlers = () => {
   mapFilterForm.addEventListener(`change`, onMapFilterFormChange);
 };
 
 window.filter = {
   filters,
   clear,
-  setMapFilterFormHandlers,
+  setHandlers,
 };

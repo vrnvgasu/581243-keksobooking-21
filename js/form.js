@@ -52,17 +52,17 @@ const validateTitle = (input) => {
   input.reportValidity();
 };
 
-const selectTypeHandler = (target) => {
+const changeType = (target) => {
   priceInput.placeholder = window.card.BUILD_TYPES[target.value].price;
   priceInput.min = window.card.BUILD_TYPES[target.value].price;
   validatePrice(priceInput);
 };
 
-const selectTimeHandler = (value) => {
+const changeTime = (value) => {
   timeinSelect.value = timeoutSelect.value = value;
 };
 
-const addRoomHandlers = (select) => {
+const changeRoomNumber = (select) => {
   const capacityValue = Number(capacitySelect.value);
   const roomValue = Number(select.value);
 
@@ -84,7 +84,7 @@ const setValidityMessage = (select, capacityValue, roomValue) => {
   select.reportValidity();
 };
 
-const addCapacityHandlers = (select) => {
+const changeCapacity = (select) => {
   const roomValue = Number(roomNumberSelect.value);
   const capacityValue = Number(select.value);
 
@@ -111,13 +111,13 @@ const setPreviewImg = (input) => {
 
 const onFormChange = (evt) => {
   if (evt.target.matches(`#type`)) {
-    selectTypeHandler(evt.target);
+    changeType(evt.target);
   } else if (evt.target.matches(`#timein`) || evt.target.matches(`#timeout`)) {
-    selectTimeHandler(evt.target.value);
+    changeTime(evt.target.value);
   } else if (evt.target.matches(`#room_number`)) {
-    addRoomHandlers(evt.target);
+    changeRoomNumber(evt.target);
   } else if (evt.target.matches(`#capacity`)) {
-    addCapacityHandlers(evt.target);
+    changeCapacity(evt.target);
   } else if (evt.target.matches(`#avatar`)) {
     window.util.loadImg(evt.target, avatarImg);
   } else if (evt.target.matches(`#images`)) {
@@ -153,7 +153,7 @@ const onAdFormResetElementClick = (evt) => {
   window.map.blockInterface();
 };
 
-const addFormHandlers = () => {
+const setHandlers = () => {
   addFormElement.addEventListener(`input`, onFormInput);
   addFormElement.addEventListener(`change`, onFormChange);
   addFormElement.addEventListener(`submit`, onAddFormSubmit);
@@ -162,6 +162,6 @@ const addFormHandlers = () => {
 
 window.form = {
   addFormElement,
-  addFormHandlers,
+  setHandlers,
   clear,
 };

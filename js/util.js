@@ -2,7 +2,7 @@
 const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 const DEBOUNCE_INTERVAL = 500; // ms
 
-const toggleDisabledOnFormNodes = (elements, disabled) => {
+const toggleDisabledElements = (elements, disabled) => {
   Array.from(elements).forEach((element) => {
     element.disabled = disabled;
   });
@@ -44,7 +44,7 @@ const loadImg = (inputElement, previewImg) => {
 };
 
 window.util = {
-  toggleDisabledOnFormNodes,
+  toggleDisabledElements,
   onSuccess,
   debounce,
   loadImg,

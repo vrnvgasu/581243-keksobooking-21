@@ -1,10 +1,10 @@
 'use strict';
 const setHandlers = () => {
-  window.form.addFormHandlers();
-  window.map.addMapPinHandlers();
-  window.map.clearMapHandlers();
-  window.filter.setMapFilterFormHandlers();
-  window.move.setMoveHandlers();
+  window.form.setHandlers();
+  window.map.setHandlers();
+  window.map.setClearHandlers();
+  window.filter.setHandlers();
+  window.move.setHandlers();
 };
 
 window.handlers = {

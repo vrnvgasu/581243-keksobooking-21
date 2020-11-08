@@ -55,10 +55,10 @@ const onMapPinElementMousedown = (evt) => {
   document.addEventListener(`mouseup`, onMouseUp);
 };
 
-const setMoveHandlers = () => {
+const setHandlers = () => {
   window.map.pinMainElement.addEventListener(`mousedown`, onMapPinElementMousedown);
 };
 
 window.move = {
-  setMoveHandlers,
+  setHandlers,
 };
