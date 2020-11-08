@@ -30,32 +30,32 @@ const filterTypes = {
     name: `features`,
   },
 };
-let loadedAdverts = [];
+let loaded = [];
 
-const filterAdverts = (adverts) => {
+const filter = (adverts) => {
   if (Object.keys(window.filter.filters).length === 0) {
     return adverts;
   }
 
-  return window.advert.loadedAdverts.filter((advert) => {
-    for (let filter in window.filter.filters) {
-      if (!window.filter.filters.hasOwnProperty(filter)) {
+  return window.advert.loaded.filter((advert) => {
+    for (let filterItem in window.filter.filters) {
+      if (!window.filter.filters.hasOwnProperty(filterItem)) {
         continue;
       }
 
-      switch (filter) {
+      switch (filterItem) {
         case filterTypes.type.name:
-          if (advert.offer.type !== window.filter.filters[filter]) {
+          if (advert.offer.type !== window.filter.filters[filterItem]) {
             return false;
           }
           break;
         case filterTypes.price.name:
           let priceResult = false;
-          if (advert.offer.price >= filterTypes.price.count[window.filter.filters[filter]].min) {
+          if (advert.offer.price >= filterTypes.price.count[window.filter.filters[filterItem]].min) {
             priceResult = true;
           }
-          if (filterTypes.price.count[window.filter.filters[filter]].max &&
-            advert.offer.price > filterTypes.price.count[window.filter.filters[filter]].max) {
+          if (filterTypes.price.count[window.filter.filters[filterItem]].max &&
+            advert.offer.price > filterTypes.price.count[window.filter.filters[filterItem]].max) {
             return false;
           }
           if (!priceResult) {
@@ -63,21 +63,21 @@ const filterAdverts = (adverts) => {
           }
           break;
         case filterTypes.rooms.name:
-          if (advert.offer.rooms !== Number(window.filter.filters[filter])) {
+          if (advert.offer.rooms !== Number(window.filter.filters[filterItem])) {
             return false;
           }
           break;
         case filterTypes.guests.name:
-          if (advert.offer.guests !== Number(window.filter.filters[filter])) {
+          if (advert.offer.guests !== Number(window.filter.filters[filterItem])) {
             return false;
           }
           break;
         case filterTypes.features.name:
-          for (let feature in window.filter.filters[filter]) {
-            if (!window.filter.filters[filter].hasOwnProperty(feature)) {
+          for (let feature in window.filter.filters[filterItem]) {
+            if (!window.filter.filters[filterItem].hasOwnProperty(feature)) {
               continue;
             }
-            if (advert.offer.features.indexOf(window.filter.filters[filter][feature]) === -1) {
+            if (advert.offer.features.indexOf(window.filter.filters[filterItem][feature]) === -1) {
               return false;
             }
           }
@@ -88,17 +88,17 @@ const filterAdverts = (adverts) => {
   });
 };
 
-const prepareAdverts = (adverts) => {
-  window.advert.loadedAdverts = adverts.filter((advert) => advert.offer);
-  window.map.addAdvertsToMap();
+const prepare = (adverts) => {
+  window.advert.loaded = adverts.filter((advert) => advert.offer);
+  window.map.renderAdverts();
 };
 
-const generateAdverts = () => {
-  window.load(LOAD_URL, prepareAdverts, window.error.addDownloadError);
+const generate = () => {
+  window.load(LOAD_URL, prepare, window.error.addDownloadMessage);
 };
 
 window.advert = {
-  loadedAdverts,
-  generateAdverts,
-  filterAdverts,
+  loaded,
+  generate,
+  filter,
 };

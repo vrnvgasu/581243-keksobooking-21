@@ -4,7 +4,7 @@ const MAX_TITLE_LENGTH = 100;
 const CAPACITY_NO_GUESTS = 0;
 const ROOM_NO_GUESTS = 100;
 const UPLOAD_URL = `https://21.javascript.pages.academy/keksobooking`;
-const defaultFormValue = {
+const defaultValues = {
   price: `1000`,
   type: `flat`,
   timein: `12:00`,
@@ -25,7 +25,7 @@ const adFormPhotoElement = addFormElement.querySelector(`.ad-form__photo`);
 const adFormResetElement = document.querySelector(`.ad-form__reset`);
 const avatarImg = document.querySelector(`.ad-form-header__preview img`);
 
-const validateFormPrice = (input) => {
+const validatePrice = (input) => {
   const price = input.value;
   const type = typeInput.value;
 
@@ -38,7 +38,7 @@ const validateFormPrice = (input) => {
   input.reportValidity();
 };
 
-const validateFormTitle = (input) => {
+const validateTitle = (input) => {
   const valueLength = input.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -55,7 +55,7 @@ const validateFormTitle = (input) => {
 const selectTypeHandler = (target) => {
   priceInput.placeholder = window.card.BUILD_TYPES[target.value].price;
   priceInput.min = window.card.BUILD_TYPES[target.value].price;
-  validateFormPrice(priceInput);
+  validatePrice(priceInput);
 };
 
 const selectTimeHandler = (value) => {
@@ -94,13 +94,13 @@ const addCapacityHandlers = (select) => {
 
 let onFormInput = (evt) => {
   if (evt.target.matches(`#title`)) {
-    validateFormTitle(evt.target);
+    validateTitle(evt.target);
   } else if (evt.target.matches(`#price`)) {
-    validateFormPrice(evt.target);
+    validatePrice(evt.target);
   }
 };
 
-const setFormPreviewImg = (input) => {
+const setPreviewImg = (input) => {
   const previewImg = document.createElement(`img`);
   previewImg.style.width = `100%`;
   previewImg.style.height = `100%`;
@@ -121,19 +121,19 @@ const onFormChange = (evt) => {
   } else if (evt.target.matches(`#avatar`)) {
     window.util.loadImg(evt.target, avatarImg);
   } else if (evt.target.matches(`#images`)) {
-    setFormPreviewImg(evt.target);
+    setPreviewImg(evt.target);
   }
 };
 
-const clearForm = () => {
+const clear = () => {
   addFormElement.reset();
-  priceInput.placeholder = defaultFormValue.price;
-  typeInput.value = defaultFormValue.type;
-  timeinSelect.value = defaultFormValue.timein;
-  timeoutSelect.value = defaultFormValue.timeout;
-  roomNumberSelect.value = defaultFormValue.roomNumber;
-  capacitySelect.value = defaultFormValue.capacity;
-  headerPreviewImgElement.src = defaultFormValue.previewAvatar;
+  priceInput.placeholder = defaultValues.price;
+  typeInput.value = defaultValues.type;
+  timeinSelect.value = defaultValues.timein;
+  timeoutSelect.value = defaultValues.timeout;
+  roomNumberSelect.value = defaultValues.roomNumber;
+  capacitySelect.value = defaultValues.capacity;
+  headerPreviewImgElement.src = defaultValues.previewAvatar;
   adFormPhotoElement.textContent = ``;
 };
 
@@ -142,7 +142,7 @@ const onAddFormSubmit = (evt) => {
   window.load(
       UPLOAD_URL,
       window.util.onSuccess,
-      window.error.addUploadError,
+      window.error.addUploadMessage,
       `POST`,
       new FormData(addFormElement)
   );
@@ -163,5 +163,5 @@ const addFormHandlers = () => {
 window.form = {
   addFormElement,
   addFormHandlers,
-  clearForm,
+  clear,
 };

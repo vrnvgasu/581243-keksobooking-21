@@ -1,17 +1,17 @@
 'use strict';
 const PIN_WIDTH = 50;
 const PIN_HEIGHT = 70;
-const mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
-const deletePins = () => {
-  const pins = window.map.mapElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+const deleteAll = () => {
+  const pins = window.map.pinElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
   pins.forEach((pin) => {
     pin.remove();
   });
 };
 
-const createPin = (advert, i) => {
-  const pin = mapPinTemplate.cloneNode(true);
+const create = (advert, i) => {
+  const pin = pinTemplate.cloneNode(true);
   const img = pin.querySelector(`img`);
   img.src = advert.author.avatar;
   img.alt = advert.offer.title;
@@ -22,18 +22,17 @@ const createPin = (advert, i) => {
   return pin;
 };
 
-const createPins = (adverts) => {
+const createElements = (adverts) => {
   const fragment = document.createDocumentFragment();
 
   adverts.forEach((advert, i) => {
-    fragment.appendChild(createPin(advert, i));
+    fragment.appendChild(create(advert, i));
   });
 
   return fragment;
 };
 
 window.pin = {
-  createPin,
-  createPins,
-  deletePins,
+  createElements,
+  deleteAll,
 };

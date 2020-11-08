@@ -4,12 +4,12 @@ const ANY = `any`;
 const FEATURES = `features`;
 let filters = [];
 
-const clearFilter = () => {
+const clear = () => {
   mapFilterForm.reset();
   window.filter.filters = [];
 };
 
-const changeFilters = () => {
+const change = () => {
   filters = [];
   let data = new FormData(mapFilterForm);
   data = data.entries();
@@ -35,14 +35,14 @@ const changeFilters = () => {
 
   window.filter.filters = filters;
 
-  window.pin.deletePins();
-  window.card.deleteCardElements();
-  window.map.addAdvertsToMap();
+  window.pin.deleteAll();
+  window.card.deleteElements();
+  window.map.renderAdverts();
 };
 
 const onMapFilterFormChange = window.util.debounce((evt) => {
   evt.preventDefault();
-  changeFilters();
+  change();
 });
 
 const setMapFilterFormHandlers = () => {
@@ -51,6 +51,6 @@ const setMapFilterFormHandlers = () => {
 
 window.filter = {
   filters,
-  clearFilter,
+  clear,
   setMapFilterFormHandlers,
 };

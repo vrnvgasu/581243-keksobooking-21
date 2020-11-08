@@ -1,22 +1,22 @@
 'use strict';
-const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+const template = document.querySelector(`#success`).content.querySelector(`.success`);
 let successElement;
 
-const addSuccessElement = () => {
+const addElement = () => {
   if (!successElement) {
-    successElement = successTemplate.cloneNode(true);
+    successElement = template.cloneNode(true);
   }
 
-  window.map.mapElement.insertAdjacentElement(`beforebegin`, successElement);
+  window.map.pinElement.insertAdjacentElement(`beforebegin`, successElement);
 };
 
-const deleteSuccessElement = () => {
+const deleteElement = () => {
   if (successElement) {
     successElement.remove();
   }
 };
 
 window.success = {
-  addSuccessElement,
-  deleteSuccessElement,
+  addElement,
+  deleteElement,
 };

@@ -2,40 +2,40 @@
 const errorUploadTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
 const errorDownloadTemplate = document.querySelector(`#load_error`).content.querySelector(`.load_error`);
 const errorMessageElement = errorUploadTemplate.querySelector(`.error__button`);
-let errorElement;
+let element;
 
-const addUploadError = (message) => {
-  deleteErrorElement();
-  errorElement = errorUploadTemplate.cloneNode(true);
+const addUploadMessage = (message) => {
+  deleteElement();
+  element = errorUploadTemplate.cloneNode(true);
   errorMessageElement.textContent = message;
-  setError();
+  set();
   window.map.blockInterface();
 };
 
-const addDownloadError = (message) => {
-  deleteErrorElement();
-  errorElement = errorDownloadTemplate.cloneNode(true);
-  errorElement.textContent = message;
-  setError();
+const addDownloadMessage = (message) => {
+  deleteElement();
+  element = errorDownloadTemplate.cloneNode(true);
+  element.textContent = message;
+  set();
 };
 
 const onErrorButtonClick = () => {
-  deleteErrorElement();
+  deleteElement();
 };
 
-const setError = () => {
-  window.map.mapElement.insertAdjacentElement(`beforebegin`, errorElement);
-  errorElement.addEventListener(`click`, onErrorButtonClick);
+const set = () => {
+  window.map.pinElement.insertAdjacentElement(`beforebegin`, element);
+  element.addEventListener(`click`, onErrorButtonClick);
 };
 
-const deleteErrorElement = () => {
-  if (errorElement) {
-    errorElement.remove();
+const deleteElement = () => {
+  if (element) {
+    element.remove();
   }
 };
 
 window.error = {
-  addDownloadError,
-  addUploadError,
-  deleteErrorElement,
+  addDownloadMessage,
+  addUploadMessage,
+  deleteElement,
 };

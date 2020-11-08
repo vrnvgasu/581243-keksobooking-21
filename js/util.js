@@ -10,7 +10,7 @@ const toggleDisabledOnFormNodes = (elements, disabled) => {
 
 const onSuccess = () => {
   window.map.blockInterface();
-  window.success.addSuccessElement();
+  window.success.addElement();
 };
 
 const debounce = (cb) => {

@@ -25,7 +25,7 @@ const hideElement = (element) => {
   element.classList.add(HIDDEN_CLASS);
 };
 
-let createCartElement = (advert) => {
+let createElement = (advert) => {
   let template = cardArticleTemplate.cloneNode(true);
   let featureItem = template.querySelector(`.popup__feature`);
   let featureList = template.querySelector(`.popup__features`);
@@ -67,19 +67,19 @@ let createCartElement = (advert) => {
 };
 
 const onPopupCloseClick = () => {
-  deleteCardElements();
+  deleteElements();
 };
 
-const deleteCardElements = () => {
+const deleteElements = () => {
   const card = window.map.mainMapElement.querySelector(`.map__card`);
   if (card) {
     card.remove();
   }
 };
 
-let addCartElementToDOM = (advert) => {
-  deleteCardElements();
-  const card = createCartElement(advert);
+let addElementToDOM = (advert) => {
+  deleteElements();
+  const card = createElement(advert);
   mapFiltersContainer.insertAdjacentElement(`beforebegin`, card);
 
   const popupCloseElement = card.querySelector(`.popup__close`);
@@ -88,6 +88,6 @@ let addCartElementToDOM = (advert) => {
 
 window.card = {
   BUILD_TYPES,
-  addCartElementToDOM,
-  deleteCardElements,
+  addElementToDOM,
+  deleteElements,
 };

@@ -1,7 +1,7 @@
 'use strict';
 const MIN_Y = 130;
 const MAX_Y = 630;
-const maxX = window.map.mapElement.clientWidth;
+const maxX = window.map.pinElement.clientWidth;
 
 const onMapPinElementMousedown = (evt) => {
   evt.preventDefault();
@@ -24,21 +24,21 @@ const onMapPinElementMousedown = (evt) => {
       y: moveEvt.pageY
     };
 
-    let top = window.map.mapPinElement.offsetTop - shift.y;
-    let left = window.map.mapPinElement.offsetLeft - shift.x;
+    let top = window.map.pinMainElement.offsetTop - shift.y;
+    let left = window.map.pinMainElement.offsetLeft - shift.x;
 
-    if (top < MIN_Y - window.map.MAP_PIN_HEIGHT) {
-      top = MIN_Y - window.map.MAP_PIN_HEIGHT;
-    } else if (top > MAX_Y - window.map.MAP_PIN_HEIGHT) {
-      top = MAX_Y - window.map.MAP_PIN_HEIGHT;
+    if (top < MIN_Y - window.map.PIN_HEIGHT) {
+      top = MIN_Y - window.map.PIN_HEIGHT;
+    } else if (top > MAX_Y - window.map.PIN_HEIGHT) {
+      top = MAX_Y - window.map.PIN_HEIGHT;
     }
-    if (left < 0 - (window.map.MAP_PIN_WIDTH / 2)) {
-      left = -window.map.MAP_PIN_WIDTH / 2;
-    } else if (left > maxX - (window.map.MAP_PIN_WIDTH / 2)) {
-      left = maxX - (window.map.MAP_PIN_WIDTH / 2);
+    if (left < 0 - (window.map.PIN_WIDTH / 2)) {
+      left = -window.map.PIN_WIDTH / 2;
+    } else if (left > maxX - (window.map.PIN_WIDTH / 2)) {
+      left = maxX - (window.map.PIN_WIDTH / 2);
     }
 
-    window.map.setAddress(left + (window.map.MAP_PIN_WIDTH / 2), top + window.map.MAP_PIN_HEIGHT);
+    window.map.setAddress(left + (window.map.PIN_WIDTH / 2), top + window.map.PIN_HEIGHT);
 
     window.map.setMapPinElementPosition(top, left);
 
@@ -56,7 +56,7 @@ const onMapPinElementMousedown = (evt) => {
 };
 
 const setMoveHandlers = () => {
-  window.map.mapPinElement.addEventListener(`mousedown`, onMapPinElementMousedown);
+  window.map.pinMainElement.addEventListener(`mousedown`, onMapPinElementMousedown);
 };
 
 window.move = {
