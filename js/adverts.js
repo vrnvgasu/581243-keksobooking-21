@@ -18,10 +18,12 @@ let filterAdverts = (adverts) => {
           break;
         case window.data.filterTypes.price.name:
           let priceResult = false;
-          if (advert.offer.price >= window.data.filterTypes.price.count[window.data.filters[filter]].min &&
-                advert.offer.price <= window.data.filterTypes.price.count[window.data.filters[filter]].max) {
+          if (advert.offer.price >= window.data.filterTypes.price.count[window.data.filters[filter]].min) {
             priceResult = true;
-            break;
+          }
+          if (window.data.filterTypes.price.count[window.data.filters[filter]].max &&
+            advert.offer.price > window.data.filterTypes.price.count[window.data.filters[filter]].max) {
+            return false;
           }
           if (!priceResult) {
             return false;
@@ -59,7 +61,7 @@ let prepareAdverts = (adverts) => {
 };
 
 let generateAdverts = () => {
-  window.load(window.data.loadUrl, prepareAdverts, window.util.onError);
+  window.load(window.data.loadUrl, prepareAdverts, window.error.addDownloadError);
 };
 
 window.adverts = {

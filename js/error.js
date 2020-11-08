@@ -1,22 +1,40 @@
 'use strict';
+const downloadErrorStyle = {
+  zIndex: 100,
+  backgroundColor: `red`,
+  textAlign: `center`,
+  position: `absolute`,
+  width: `100%`,
+};
+const errorMessageElement = window.data.errorTemplate.querySelector(`.error__button`);
 let errorElement;
-let errorButtonElement;
+
+const addUploadError = (message) => {
+  deleteErrorElement();
+  errorElement = window.data.errorTemplate.cloneNode(true);
+  errorMessageElement.textContent = message;
+  setError();
+  window.map.blockInterface();
+};
+const addDownloadError = (message) => {
+  deleteErrorElement();
+  errorElement = document.createElement(`div`);
+  errorElement.style.zIndex = downloadErrorStyle.zIndex;
+  errorElement.style.backgroundColor = downloadErrorStyle.backgroundColor;
+  errorElement.style.textAlign = downloadErrorStyle.textAlign;
+  errorElement.style.position = downloadErrorStyle.position;
+  errorElement.style.width = downloadErrorStyle.width;
+  errorElement.textContent = message;
+  setError();
+};
 
 let onErrorButtonClick = () => {
   deleteErrorElement();
 };
 
-let addErrorElement = (message) => {
-  if (!errorElement) {
-    errorElement = window.data.errorTemplate.cloneNode(true);
-  }
-
-  errorButtonElement = errorElement.querySelector(`.error__button`);
-  let errorMessageElement = errorElement.querySelector(`.error__button`);
-  errorMessageElement.textContent = message;
+let setError = () => {
   window.data.mapElement.insertAdjacentElement(`beforebegin`, errorElement);
-
-  errorButtonElement.addEventListener(`click`, onErrorButtonClick);
+  errorElement.addEventListener(`click`, onErrorButtonClick);
 };
 
 let deleteErrorElement = () => {
@@ -26,6 +44,7 @@ let deleteErrorElement = () => {
 };
 
 window.error = {
-  addErrorElement,
+  addDownloadError,
+  addUploadError,
   deleteErrorElement,
 };

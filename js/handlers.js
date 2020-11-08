@@ -4,6 +4,7 @@ let setHandlers = () => {
   window.map.addMapPinHandlers();
   window.map.clearMapHandlers();
   window.filter.setMapFilterFormHandlers();
+  window.move.setMoveHandlers();
 };
 
 window.handlers = {

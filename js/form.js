@@ -28,6 +28,7 @@ let validateFormTitle = (input) => {
 
 let selectTypeHandler = (target) => {
   window.data.priceInput.placeholder = window.data.BUILD_TYPES[target.value].price;
+  window.data.priceInput.min = window.data.BUILD_TYPES[target.value].price;
   validateFormPrice(window.data.priceInput);
 };
 
@@ -120,11 +121,10 @@ let clearForm = () => {
 
 let onAddFormSubmit = (evt) => {
   evt.preventDefault();
-
   window.load(
       window.data.uploadUrl,
       window.util.onSuccess,
-      window.util.onError,
+      window.error.addUploadError,
       `POST`,
       new FormData(window.data.addFormElement)
   );

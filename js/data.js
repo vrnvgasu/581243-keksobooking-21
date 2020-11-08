@@ -19,21 +19,9 @@ window.data.BUILD_TYPES = {
   },
 };
 window.data.FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
-window.data.CHECKINS = [`12:00`, `13:00`, `14:00`];
-window.data.CHECKOUTS = [`12:00`, `13:00`, `14:00`];
-window.data.FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
-window.data.PHOTOS = [
-  `http://o0.github.io/assets/images/tokyo/hotel1.jpg`,
-  `http://o0.github.io/assets/images/tokyo/hotel2.jpg`,
-  `http://o0.github.io/assets/images/tokyo/hotel3.jpg`,
-];
 window.data.HIDDEN_CLASS = `visually-hidden`;
 window.data.MIN_Y = 130;
 window.data.MAX_Y = 630;
-window.data.MIN_ROOMS = 1;
-window.data.MAX_ROOMS = 3;
-window.data.MAX_PRICE = 1000000;
-window.data.MAX_ADVERTS_COUNT = 5;
 window.data.DEBOUNCE_INTERVAL = 500; // ms
 window.data.MAIN_PIT_TOP = 375;
 window.data.MAIN_PIT_LEFT = 570;
@@ -58,7 +46,6 @@ window.data.mapFiltersContainer = document.querySelector(`.map__filters-containe
 window.data.mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 window.data.mapElement = document.querySelector(`.map__pins`);
 window.data.cardArticleTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
-window.data.mapWidth = window.data.mapElement.offsetWidth;
 window.data.fieldsetElements = document.querySelectorAll(`fieldset`);
 window.data.mapFilterElements = document.querySelectorAll(`.map__filter`);
 window.data.mapPinElement = document.querySelector(`.map__pin--main`);
@@ -104,8 +91,7 @@ window.data.filterTypes = {
         max: 50000,
       },
       high: {
-        min: 50001,
-        max: 1000000000,
+        min: 50000,
       },
     }
   },

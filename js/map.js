@@ -29,10 +29,10 @@ let blockInterface = () => {
     document.removeEventListener(`click`, onPinClick);
     window.form.clearForm();
     window.filter.clearFilter();
-    window.move.deleteMoveHandlers();
   }
 
   interfaceActiveStatus = false;
+  addMapPinHandlers();
 };
 
 let setMapPinElementPosition = (top, left) => {
@@ -55,7 +55,7 @@ let activateInterface = () => {
   }
 
   window.data.mapPinElement.removeEventListener(`keydown`, onMapPinKeydown);
-  window.move.setMoveHandlers();
+  window.data.mapPinElement.removeEventListener(`mousedown`, onMapPinMousedown);
 };
 
 let setAddress = (x, y) => {
@@ -63,6 +63,7 @@ let setAddress = (x, y) => {
 };
 
 let onMapPinMousedown = (evt) => {
+  evt.preventDefault();
   if (evt.button !== 0) {
     return;
   }
@@ -71,6 +72,7 @@ let onMapPinMousedown = (evt) => {
 };
 
 let onMapPinKeydown = (evt) => {
+  evt.preventDefault();
   if (evt.keyCode !== 13) {
     return;
   }
@@ -81,7 +83,6 @@ let onMapPinKeydown = (evt) => {
 let addMapPinHandlers = () => {
   window.data.mapPinElement.addEventListener(`mousedown`, onMapPinMousedown);
   window.data.mapPinElement.addEventListener(`keydown`, onMapPinKeydown);
-  // window.data.mapPinElement.addEventListener(`mouseup`, onMapPinMouseup);
 };
 
 let setStartAddress = () => {
