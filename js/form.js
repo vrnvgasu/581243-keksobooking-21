@@ -92,7 +92,7 @@ const changeCapacity = (select) => {
   setValidityMessage(roomNumberSelect, capacityValue, roomValue);
 };
 
-let onFormInput = (evt) => {
+const onFormInput = (evt) => {
   if (evt.target.matches(`#title`)) {
     validateTitle(evt.target);
   } else if (evt.target.matches(`#price`)) {

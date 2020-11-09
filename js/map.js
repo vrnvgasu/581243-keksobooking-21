@@ -3,8 +3,7 @@ const MAIN_PIN_TOP = 375;
 const MAIN_PIN_LEFT = 570;
 const PIN_WIDTH = 64;
 const PIN_HEIGHT = 70;
-const fieldsetElements = document.querySelectorAll(`fieldset`);
-const filterElements = document.querySelectorAll(`.map__filter`);
+const formFieldsetElements = document.querySelectorAll(`.ad-form fieldset`);
 const addressInput = document.querySelector(`#address`);
 const pinElement = document.querySelector(`.map__pins`);
 const pinMainElement = document.querySelector(`.map__pin--main`);
@@ -15,7 +14,7 @@ let adverts = [];
 const renderAdverts = () => {
   adverts = window.advert.loaded.slice();
   adverts = window.advert.filter(adverts);
-
+  window.filter.toggleDisabledFilters(adverts.length === 0);
   adverts = adverts.slice(0, 5);
   const fragment = window.pin.createElements(adverts);
   pinElement.appendChild(fragment);
@@ -26,8 +25,8 @@ const renderAdverts = () => {
 const blockInterface = () => {
   setMapPinElementPosition(MAIN_PIN_TOP, MAIN_PIN_LEFT);
   setStartAddress();
-  window.util.toggleDisabledElements(fieldsetElements, true);
-  window.util.toggleDisabledElements(filterElements, true);
+  window.util.toggleDisabledElements(formFieldsetElements, true);
+  window.filter.toggleDisabledFilters(true);
 
   if (interfaceActiveStatus) {
     window.pin.deleteAll();
@@ -52,8 +51,7 @@ const setMapPinElementPosition = (top, left) => {
 const activateInterface = () => {
   interfaceActiveStatus = true;
   setAddressForActiveMap();
-  window.util.toggleDisabledElements(fieldsetElements, false);
-  window.util.toggleDisabledElements(filterElements, false);
+  window.util.toggleDisabledElements(formFieldsetElements, false);
   mainMapElement.classList.remove(`map--faded`);
   window.form.addFormElement.classList.remove(`ad-form--disabled`);
 
@@ -71,7 +69,7 @@ const setAddress = (x, y) => {
   addressInput.value = `${x}, ${y}`;
 };
 
-let onMapPinMousedown = (evt) => {
+const onMapPinMousedown = (evt) => {
   evt.preventDefault();
   if (evt.button !== 0) {
     return;

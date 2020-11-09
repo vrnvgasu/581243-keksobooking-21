@@ -2,7 +2,14 @@
 const ANY = `any`;
 const FEATURES = `features`;
 const mapFilterForm = document.querySelector(`.map__filters`);
+const filterFieldsetElements = mapFilterForm.querySelectorAll(`fieldset`);
+const filterElements = mapFilterForm.querySelectorAll(`.map__filter`);
 let filters = [];
+
+const toggleDisabledFilters = (disabled) => {
+  window.util.toggleDisabledElements(filterElements, disabled);
+  window.util.toggleDisabledElements(filterFieldsetElements, disabled);
+};
 
 const clear = () => {
   mapFilterForm.reset();
@@ -53,4 +60,5 @@ window.filter = {
   filters,
   clear,
   setHandlers,
+  toggleDisabledFilters,
 };

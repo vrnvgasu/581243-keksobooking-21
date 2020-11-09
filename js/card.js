@@ -25,13 +25,13 @@ const hideElement = (element) => {
   element.classList.add(HIDDEN_CLASS);
 };
 
-let createElement = (advert) => {
-  let template = cardArticleTemplate.cloneNode(true);
-  let featureItem = template.querySelector(`.popup__feature`);
-  let featureList = template.querySelector(`.popup__features`);
-  let photoItem = template.querySelector(`.popup__photo`);
-  let photoList = template.querySelector(`.popup__photos`);
-  let avatar = template.querySelector(`.popup__avatar`);
+const createElement = (advert) => {
+  const template = cardArticleTemplate.cloneNode(true);
+  const featureItem = template.querySelector(`.popup__feature`);
+  const featureList = template.querySelector(`.popup__features`);
+  const photoItem = template.querySelector(`.popup__photo`);
+  const photoList = template.querySelector(`.popup__photos`);
+  const avatar = template.querySelector(`.popup__avatar`);
 
   template.querySelector(`.popup__title`).textContent = advert.offer.title;
   template.querySelector(`.popup__text--address`).textContent = advert.offer.address;
@@ -77,7 +77,7 @@ const deleteElements = () => {
   }
 };
 
-let addElementToDOM = (advert) => {
+const addElementToDOM = (advert) => {
   deleteElements();
   const card = createElement(advert);
   mapFiltersContainer.insertAdjacentElement(`beforebegin`, card);

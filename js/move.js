@@ -14,7 +14,7 @@ const onMapPinElementMousedown = (evt) => {
   const onMouseMove = (moveEvt) => {
     moveEvt.preventDefault();
 
-    let shift = {
+    const shift = {
       x: startCoords.x - moveEvt.pageX,
       y: startCoords.y - moveEvt.pageY
     };
