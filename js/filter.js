@@ -2,6 +2,8 @@
 const ANY = `any`;
 const FEATURES = `features`;
 const mapFilterForm = document.querySelector(`.map__filters`);
+const selectElements = mapFilterForm.querySelectorAll(`.map__filter`);
+const fieldsetElements = mapFilterForm.querySelectorAll(`fieldset`);
 let filters = [];
 
 const clear = () => {
@@ -51,6 +53,8 @@ const setHandlers = () => {
 
 window.filter = {
   filters,
+  selectElements,
+  fieldsetElements,
   clear,
   setHandlers,
 };

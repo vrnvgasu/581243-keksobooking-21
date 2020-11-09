@@ -17,6 +17,8 @@ const addDownloadMessage = (message) => {
   element = errorDownloadTemplate.cloneNode(true);
   element.textContent = message;
   set();
+  window.util.toggleDisabledElements(window.filter.selectElements, true);
+  window.util.toggleDisabledElements(window.filter.fieldsetElements, true);
 };
 
 const onErrorButtonClick = () => {

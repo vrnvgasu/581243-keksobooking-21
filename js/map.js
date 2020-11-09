@@ -4,7 +4,6 @@ const MAIN_PIN_LEFT = 570;
 const PIN_WIDTH = 64;
 const PIN_HEIGHT = 70;
 const fieldsetElements = document.querySelectorAll(`fieldset`);
-const filterElements = document.querySelectorAll(`.map__filter`);
 const addressInput = document.querySelector(`#address`);
 const pinElement = document.querySelector(`.map__pins`);
 const pinMainElement = document.querySelector(`.map__pin--main`);
@@ -27,7 +26,7 @@ const blockInterface = () => {
   setMapPinElementPosition(MAIN_PIN_TOP, MAIN_PIN_LEFT);
   setStartAddress();
   window.util.toggleDisabledElements(fieldsetElements, true);
-  window.util.toggleDisabledElements(filterElements, true);
+  window.util.toggleDisabledElements(window.filter.selectElements, true);
 
   if (interfaceActiveStatus) {
     window.pin.deleteAll();
@@ -53,7 +52,7 @@ const activateInterface = () => {
   interfaceActiveStatus = true;
   setAddressForActiveMap();
   window.util.toggleDisabledElements(fieldsetElements, false);
-  window.util.toggleDisabledElements(filterElements, false);
+  window.util.toggleDisabledElements(window.filter.selectElements, false);
   mainMapElement.classList.remove(`map--faded`);
   window.form.addFormElement.classList.remove(`ad-form--disabled`);
 
